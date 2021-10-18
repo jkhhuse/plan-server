@@ -3,7 +3,7 @@ package com.jkhhuse.plan.controller.person;
 import com.jkhhuse.plan.common.CommonResponse;
 import com.jkhhuse.plan.dto.person.PersonDTO;
 import com.jkhhuse.plan.service.person.PersonService;
-import com.jkhhuse.plan.vo.CustomerVO;
+import com.jkhhuse.plan.vo.person.PersonVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -23,7 +23,7 @@ public class PersonController {
 
   @ApiOperation(value = "新增用户", notes = "新增一条记录")
   @PostMapping(value = "/add", consumes = "application/json")
-  CommonResponse<List<CustomerVO>> addCustomer(
+  CommonResponse<List<PersonVO>> addCustomer(
           @ApiParam(value = "用户信息", required = true) @Valid @RequestBody PersonDTO personDTO) {
     String message = "";
     try {

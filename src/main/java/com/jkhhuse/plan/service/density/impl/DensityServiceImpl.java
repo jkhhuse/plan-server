@@ -27,7 +27,7 @@ public class DensityServiceImpl implements DensityService {
     }
 
     @Override
-    public DensityDO updateDensity(long uuid, String lastName) {
-        return null;
+    public void deleteDensity(String density_uuid) {
+        densityDao.deleteByDensity_UuId(density_uuid);
     }
 }

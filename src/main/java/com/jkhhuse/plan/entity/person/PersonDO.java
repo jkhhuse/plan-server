@@ -26,15 +26,15 @@ public class PersonDO implements Serializable {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name="create_time", nullable = false)
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date create_time;
+    private Date createTime;
 
-    @Column(nullable = false)
+    @Column(name="born_time", nullable = false)
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date born_time;
+    private Date bornTime;
 
     @Column(nullable = false)
     private Float origin;

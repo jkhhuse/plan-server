@@ -23,14 +23,14 @@ public class DensityDO implements Serializable {
     @GenericGenerator(name = "system_uuid", strategy = "uuid")
     private String uuid;
 
-    @Column(nullable = false)
-    private String person_uuid;
+    @Column(name="person_uuid", nullable = false)
+    private String personUuid;
 
-    @Column(nullable = false)
+    @Column(name="measure_uuid", nullable = false)
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date measure_time;
+    private Date measureTime;
 
-    @Column(nullable = false)
+    @Column(name="measure_value", nullable = false)
     private Float measure_value;
 }
