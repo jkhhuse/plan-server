@@ -12,12 +12,12 @@ import lombok.ToString;
 @ApiModel(description = "Density 实体")
 public class DensityVO {
 
-    @ApiModelProperty(value = "person_uuid", required = true)
-    private String person_uuid;
+    @ApiModelProperty(value = "personUuid", required = true)
+    private String personUuid;
 
-    @ApiModelProperty(value = "measure_time", required = true)
-    private String measure_time;
+    @ApiModelProperty(value = "measureTime", required = true)
+    private String measureTime;
 
-    @ApiModelProperty(value = "measure_value", required = true)
-    private Float measure_value;
+    @ApiModelProperty(value = "measureValue", required = true)
+    private Float measureValue;
 }

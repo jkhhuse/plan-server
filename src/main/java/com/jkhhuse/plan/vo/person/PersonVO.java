@@ -12,17 +12,17 @@ import lombok.ToString;
 @ApiModel(description = "Person 实体")
 public class PersonVO {
 
-    @ApiModelProperty(value = "Person uuid", required = true)
+    @ApiModelProperty(value = "PersonUuid", required = true)
     private Long uuid;
 
     @ApiModelProperty(value = "name", required = true)
     private String name;
 
-    @ApiModelProperty(value = "create_time", required = true)
-    private String create_time;
+    @ApiModelProperty(value = "createTime", required = true)
+    private String createTime;
 
-    @ApiModelProperty(value = "born_time", required = true)
-    private String born_time;
+    @ApiModelProperty(value = "bornTime", required = true)
+    private String bornTime;
 
     @ApiModelProperty(value = "origin", required = true)
     private Float origin;

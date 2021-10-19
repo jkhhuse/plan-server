@@ -35,9 +35,9 @@ public class PersonServiceImpl implements PersonService {
         PersonDO personDO = new PersonDO();
         personDO.setName(personDTO.getName());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        personDO.setBorn_time(format.parse(personDTO.getBorn_time()));
+        personDO.setBornTime(format.parse(personDTO.getBornTime()));
         personDO.setOrigin(personDTO.getOrigin());
-        personDO.setCreate_time(new Date());
+        personDO.setCreateTime(new Date());
         personDO.setAddr(personDTO.getAddr());
         personDO.setEmail(personDTO.getEmail());
         personDO.setPaaswd(personDTO.getPaaswd());
@@ -45,8 +45,8 @@ public class PersonServiceImpl implements PersonService {
 
         // 插入数据信息
         DensityDTO densityDTO = new DensityDTO();
-        densityDTO.setMeasure_time(personDTO.getBorn_time());
-        densityDTO.setMeasure_value(personDTO.getOrigin());
+        densityDTO.setMeasureTime(personDTO.getBornTime());
+        densityDTO.setMeasureValue(personDTO.getOrigin());
         densityService.addDensity(densityDTO, result.getUuid());
 
         return result.getUuid();

@@ -16,18 +16,18 @@ public class DensityServiceImpl implements DensityService {
     private DensityDao densityDao;
 
     @Override
-    public String addDensity(DensityDTO densityDTO, String person_uuid) throws ParseException {
+    public String addDensity(DensityDTO densityDTO, String personUuid) throws ParseException {
         DensityDO densityDO = new DensityDO();
-        densityDO.setPerson_uuid(person_uuid);
+        densityDO.setPersonUuid(personUuid);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        densityDO.setMeasure_time(format.parse(densityDTO.getMeasure_time()));
-        densityDO.setMeasure_value(densityDTO.getMeasure_value());
+        densityDO.setMeasureTime(format.parse(densityDTO.getMeasureTime()));
+        densityDO.setMeasureValue(densityDTO.getMeasureValue());
         densityDao.save(densityDO);
         return null;
     }
 
     @Override
     public void deleteDensity(String density_uuid) {
-        densityDao.deleteByDensity_UuId(density_uuid);
+        densityDao.deleteByUuid(density_uuid);
     }
 }

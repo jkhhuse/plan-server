@@ -13,6 +13,6 @@ public interface DensityDao extends JpaRepository<DensityDO, Long> {
 //	@Modifying
 //	@Transactional(rollbackFor = RuntimeException.class)
 //	@Query("delete from density where density_uuid = ?1")
-	void deleteByDensity_UuId(String density_uuid);
+	void deleteByUuid(String uuid);
 
 }

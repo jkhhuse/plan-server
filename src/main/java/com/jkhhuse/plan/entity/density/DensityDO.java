@@ -26,11 +26,11 @@ public class DensityDO implements Serializable {
     @Column(name="person_uuid", nullable = false)
     private String personUuid;
 
-    @Column(name="measure_uuid", nullable = false)
+    @Column(name="measure_time", nullable = false)
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date measureTime;
 
     @Column(name="measure_value", nullable = false)
-    private Float measure_value;
+    private Float measureValue;
 }

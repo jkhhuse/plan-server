@@ -19,13 +19,13 @@ public class PersonDTO {
     @NotBlank(message = "昵称不能为空")
     private String name;
 
-    @ApiModelProperty(value = "create_time", required = true)
+    @ApiModelProperty(value = "createTime", required = true)
     @NotBlank(message = "创建时间不能为空")
-    private String create_time;
+    private String createTime;
 
-    @ApiModelProperty(value = "born_time", required = true)
+    @ApiModelProperty(value = "bornTime", required = true)
     @NotBlank(message = "出生日期不能为空")
-    private String born_time;
+    private String bornTime;
 
     @ApiModelProperty(value = "origin", required = true)
     @NotNull(message = "初始血值名称不能为空")

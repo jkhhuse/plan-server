@@ -15,15 +15,15 @@ import javax.validation.constraints.NotNull;
 @ApiModel(description = "Density DTO")
 public class DensityDTO {
 
-    @ApiModelProperty(value = "person_uuid", required = true)
+    @ApiModelProperty(value = "personUuid", required = true)
     @NotBlank(message = "人员 id 不能为空")
-    private String person_uuid;
+    private String personUuid;
 
-    @ApiModelProperty(value = "measure_time", required = true)
+    @ApiModelProperty(value = "measureTime", required = true)
     @NotBlank(message = "测量时间不能为空")
-    private String measure_time;
+    private String measureTime;
 
-    @ApiModelProperty(value = "measure_value", required = true)
+    @ApiModelProperty(value = "measureValue", required = true)
     @NotNull(message = "测量值不能为空")
-    private Float measure_value;
+    private Float measureValue;
 }
