@@ -1,8 +1,10 @@
 package com.jkhhuse.plan.service.density;
 
 import com.jkhhuse.plan.dto.density.DensityDTO;
+import com.jkhhuse.plan.dto.density.DensityDimensionDTO;
 
 import java.text.ParseException;
+import java.util.List;
 
 public interface DensityService {
 
@@ -12,7 +14,11 @@ public interface DensityService {
      * @param densityDTO
      * @return
      */
-    String addDensity(DensityDTO densityDTO, String person_uuid) throws ParseException;
+    String addDensity(DensityDTO densityDTO) throws ParseException;
 
-    void deleteDensity(String density_uuid);
+    void deleteDensity(String densityUuid);
+
+    int countMeasureDuplicate(String startTime, String endTime);
+
+    List<DensityDimensionDTO> getDensitySet(String startTime, String endTime);
 }

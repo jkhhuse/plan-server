@@ -2,6 +2,7 @@ package com.jkhhuse.plan.service.density.impl;
 
 import com.jkhhuse.plan.dao.density.DensityDao;
 import com.jkhhuse.plan.dto.density.DensityDTO;
+import com.jkhhuse.plan.dto.density.DensityDimensionDTO;
 import com.jkhhuse.plan.entity.density.DensityDO;
 import com.jkhhuse.plan.service.density.DensityService;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @Service
 public class DensityServiceImpl implements DensityService {
@@ -16,9 +20,9 @@ public class DensityServiceImpl implements DensityService {
     private DensityDao densityDao;
 
     @Override
-    public String addDensity(DensityDTO densityDTO, String personUuid) throws ParseException {
+    public String addDensity(DensityDTO densityDTO) throws ParseException {
         DensityDO densityDO = new DensityDO();
-        densityDO.setPersonUuid(personUuid);
+        densityDO.setPersonUuid(densityDTO.getPersonUuid());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         densityDO.setMeasureTime(format.parse(densityDTO.getMeasureTime()));
         densityDO.setMeasureValue(densityDTO.getMeasureValue());
@@ -27,7 +31,40 @@ public class DensityServiceImpl implements DensityService {
     }
 
     @Override
-    public void deleteDensity(String density_uuid) {
-        densityDao.deleteByUuid(density_uuid);
+    public void deleteDensity(String densityUuid) {
+        densityDao.deleteByUuid(densityUuid);
     }
+
+    @Override
+    public int countMeasureDuplicate(String startTime, String endTime) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        List<DensityDO> results = null;
+        try {
+            results = densityDao.findByMeasureTimeBetween(format.parse(startTime), format.parse(endTime));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return results.size();
+    }
+
+    @Override
+    public List<DensityDimensionDTO> getDensitySet(String startTime, String endTime) {
+        List<DensityDO> results = null;
+        List<DensityDimensionDTO> dList = new ArrayList<>();
+        SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            results = densityDao.findByMeasureTimeBetween(formater.parse(startTime), formater.parse(endTime));
+            Iterator<DensityDO> it = results.listIterator();
+            while(it.hasNext()) {
+                DensityDimensionDTO dto = new DensityDimensionDTO();
+                dto.setMeasureTime(formater.format(it.next().getMeasureTime()));
+                dto.setMeasureValue(it.next().getMeasureValue());
+                dList.add(dto);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dList;
+    }
+
 }

@@ -45,9 +45,10 @@ public class PersonServiceImpl implements PersonService {
 
         // 插入数据信息
         DensityDTO densityDTO = new DensityDTO();
+        densityDTO.setPersonUuid(result.getUuid());
         densityDTO.setMeasureTime(personDTO.getBornTime());
         densityDTO.setMeasureValue(personDTO.getOrigin());
-        densityService.addDensity(densityDTO, result.getUuid());
+        densityService.addDensity(densityDTO);
 
         return result.getUuid();
     }
