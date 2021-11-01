@@ -3,7 +3,6 @@ package com.jkhhuse.plan.service.person.impl;
 import com.jkhhuse.plan.dao.person.PersonDao;
 import com.jkhhuse.plan.dto.density.DensityDTO;
 import com.jkhhuse.plan.dto.person.PersonDTO;
-import com.jkhhuse.plan.entity.density.DensityDO;
 import com.jkhhuse.plan.entity.person.PersonDO;
 import com.jkhhuse.plan.service.density.DensityService;
 import com.jkhhuse.plan.service.person.PersonService;
@@ -22,6 +21,11 @@ public class PersonServiceImpl implements PersonService {
 
     @Resource
     private DensityService densityService;
+
+    @Override
+    public PersonDO findPersonById(String uuid) {
+        return personDao.findByUuid(uuid);
+    }
 
     @Override
     public String addPerson(PersonDTO personDTO) throws ParseException {
@@ -54,7 +58,23 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonDO updatePerson(long uuid, String lastName) {
-        return null;
+    public String updatePerson(String uuid, PersonDTO personDTO) throws ParseException {
+        // 验证密码是否正确
+        List<PersonDO> list = personDao.findByPaaswdAndUuid(personDTO.getPaaswd(), String.valueOf(uuid));
+        if (list.size() == 0 ) {
+            return "用户密码输入错误";
+        }
+
+        PersonDO personDO = personDao.findByUuid(uuid);
+        personDO.setName(personDTO.getName());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        personDO.setBornTime(format.parse(personDTO.getBornTime()));
+        personDO.setOrigin(personDTO.getOrigin());
+        personDO.setCreateTime(new Date());
+        personDO.setAddr(personDTO.getAddr());
+        personDO.setEmail(personDTO.getEmail());
+        personDO.setPaaswd(personDTO.getPaaswd());
+        personDao.save(personDO);
+        return "更新成功";
     }
 }

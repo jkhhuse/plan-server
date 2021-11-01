@@ -7,6 +7,8 @@ import java.text.ParseException;
 
 public interface PersonService {
 
+    PersonDO findPersonById(String uuid);
+
     /**
      * 新增用户信息
      * @param personDTO
@@ -17,8 +19,8 @@ public interface PersonService {
     /**
      * 更新用户信息
      * @param uuid
-     * @param lastName
+     * @param personDTO
      * @return
      */
-    PersonDO updatePerson(long uuid, String lastName);
+    String updatePerson(String uuid, PersonDTO personDTO) throws ParseException;
 }

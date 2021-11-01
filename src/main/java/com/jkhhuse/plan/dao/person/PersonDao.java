@@ -7,8 +7,9 @@ import java.util.List;
 
 public interface PersonDao extends JpaRepository<PersonDO, Long> {
 
-	PersonDO findByUuid(long uuid);
+	PersonDO findByUuid(String uuid);
 
 	List<PersonDO> findByEmail(String email);
 
+	List<PersonDO> findByPaaswdAndUuid(String paasWd, String uuid);
 }
