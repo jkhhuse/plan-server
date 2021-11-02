@@ -1,6 +1,6 @@
-package com.jkhhuse.plan.service.impl;
+package com.jkhhuse.plan.service.redis.impl;
 
-import com.jkhhuse.plan.service.RedisService;
+import com.jkhhuse.plan.service.redis.RedisService;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 

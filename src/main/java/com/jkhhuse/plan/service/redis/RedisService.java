@@ -1,4 +1,4 @@
-package com.jkhhuse.plan.service;
+package com.jkhhuse.plan.service.redis;
 
 import java.util.List;
 import java.util.Map;

@@ -1,7 +1,7 @@
 package com.jkhhuse.plan.controller;
 
 import com.jkhhuse.plan.common.CommonResponse;
-import com.jkhhuse.plan.service.KafkaService;
+import com.jkhhuse.plan.service.kafka.KafkaService;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

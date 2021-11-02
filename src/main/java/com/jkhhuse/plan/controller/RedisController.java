@@ -1,7 +1,7 @@
 package com.jkhhuse.plan.controller;
 
 import com.jkhhuse.plan.common.CommonResponse;
-import com.jkhhuse.plan.service.RedisService;
+import com.jkhhuse.plan.service.redis.RedisService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

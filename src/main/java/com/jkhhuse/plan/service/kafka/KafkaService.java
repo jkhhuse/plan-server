@@ -1,4 +1,4 @@
-package com.jkhhuse.plan.service;
+package com.jkhhuse.plan.service.kafka;
 
 import com.google.common.collect.Lists;
 import org.apache.kafka.clients.admin.*;
