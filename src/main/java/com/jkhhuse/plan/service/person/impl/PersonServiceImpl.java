@@ -6,6 +6,7 @@ import com.jkhhuse.plan.dto.person.PersonDTO;
 import com.jkhhuse.plan.entity.person.PersonDO;
 import com.jkhhuse.plan.service.density.DensityService;
 import com.jkhhuse.plan.service.person.PersonService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,6 +23,9 @@ public class PersonServiceImpl implements PersonService {
     @Resource
     private DensityService densityService;
 
+    @Resource
+    private PasswordEncoder bcryptEncoder;
+
     @Override
     public PersonDO findPersonById(String uuid) {
         return personDao.findByUuid(uuid);
@@ -32,7 +36,13 @@ public class PersonServiceImpl implements PersonService {
         // 判断用户邮箱不能重复
         List<PersonDO> personList = personDao.findByEmail(personDTO.getEmail());
         if (!personList.isEmpty()) {
-            return "该用户已存在";
+            return "该邮箱已被使用！";
+        }
+
+        // 判断用户邮箱不能重复
+        PersonDO personDo = personDao.findByName(personDTO.getName());
+        if (personDo != null) {
+            return "该用户名已被使用，请更换其他用户名！";
         }
 
         // 插入人员数据
@@ -44,7 +54,7 @@ public class PersonServiceImpl implements PersonService {
         personDO.setCreateTime(new Date());
         personDO.setAddr(personDTO.getAddr());
         personDO.setEmail(personDTO.getEmail());
-        personDO.setPaaswd(personDTO.getPaaswd());
+        personDO.setPaaswd(bcryptEncoder.encode(personDTO.getPaaswd()));
         PersonDO result = personDao.save(personDO);
 
         // 插入数据信息
@@ -73,7 +83,7 @@ public class PersonServiceImpl implements PersonService {
         personDO.setCreateTime(new Date());
         personDO.setAddr(personDTO.getAddr());
         personDO.setEmail(personDTO.getEmail());
-        personDO.setPaaswd(personDTO.getPaaswd());
+        personDO.setPaaswd(bcryptEncoder.encode(personDTO.getPaaswd()));
         personDao.save(personDO);
         return "更新成功";
     }

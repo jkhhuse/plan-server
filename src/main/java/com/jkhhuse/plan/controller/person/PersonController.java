@@ -30,19 +30,6 @@ public class PersonController {
         return new CommonResponse("200", person, "");
     }
 
-    @ApiOperation(value = "新增用户", notes = "新增一条记录")
-    @PostMapping(value = "/add", consumes = "application/json")
-    CommonResponse<List<PersonVO>> addPerson(
-            @ApiParam(value = "用户信息", required = true) @Valid @RequestBody PersonDTO personDTO) {
-        String message = "";
-        try {
-            message = personService.addPerson(personDTO);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return new CommonResponse("200", "", message);
-    }
-
     @ApiOperation(value = "更新用户", notes = "修改一条记录")
     @PutMapping(value = "/update", consumes = "application/json")
     CommonResponse<String> updateCPerson(

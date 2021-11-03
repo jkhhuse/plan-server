@@ -2,7 +2,10 @@ package com.jkhhuse.plan.controller.auth;
 
 import com.jkhhuse.plan.common.CommonResponse;
 import com.jkhhuse.plan.dto.auth.AuthDTO;
+import com.jkhhuse.plan.dto.person.PersonDTO;
+import com.jkhhuse.plan.service.person.PersonService;
 import com.jkhhuse.plan.utils.JwtTokenUtil;
+import com.jkhhuse.plan.vo.person.PersonVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
 
 @Api("desc of class")
@@ -34,6 +38,21 @@ public class JwtAuthenticationController {
     @Resource
     private UserDetailsService jwtInMemoryUserDetailsService;
 
+    @Resource
+    private PersonService personService;
+
+    @ApiOperation(value = "用户注册", notes = "新增用户信息")
+    @PostMapping(value = "/register", consumes = "application/json")
+    CommonResponse<List<PersonVO>> register(
+            @ApiParam(value = "用户信息", required = true) @Valid @RequestBody PersonDTO personDTO) {
+        String message = "";
+        try {
+            message = personService.addPerson(personDTO);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return new CommonResponse("200", "", message);
+    }
 
     @ApiOperation(value = "权限认证", notes = "获得 jwt token")
     @PostMapping(value = "/authenticate", consumes = "application/json")

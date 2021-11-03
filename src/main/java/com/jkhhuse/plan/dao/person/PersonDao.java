@@ -12,4 +12,6 @@ public interface PersonDao extends JpaRepository<PersonDO, Long> {
 	List<PersonDO> findByEmail(String email);
 
 	List<PersonDO> findByPaaswdAndUuid(String paasWd, String uuid);
+
+	PersonDO findByName(String username);
 }

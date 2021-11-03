@@ -1,20 +1,27 @@
 package com.jkhhuse.plan.service.jwt;
 
+import com.jkhhuse.plan.dao.person.PersonDao;
+import com.jkhhuse.plan.entity.person.PersonDO;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
+    @Resource
+    private PersonDao personDao;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if ("iot.technology".equals(username)) {
-            return new User("iot.technology", "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6",
+        PersonDO personDO = personDao.findByName(username);
+        if (personDO != null) {
+            return new User(personDO.getName(), personDO.getPaaswd(),
                     new ArrayList<>());
         } else {
             throw new UsernameNotFoundException("User not found with username: " + username);
