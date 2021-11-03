@@ -4,7 +4,7 @@ spring:
     #    driver-class-name: com.mysql.jdbc.Driver
     #    username: dm
     #    password: ${MYSQL_PASSWORD :ENC(kWGtsTQceU2EmQSvMakMJg==)}
-    url: jdbc:mysql://100.76.7.32:3306/plan?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/plan?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
