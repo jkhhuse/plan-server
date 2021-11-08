@@ -25,7 +25,6 @@ import java.util.Objects;
 
 @Api("desc of class")
 @RestController
-@CrossOrigin
 @RequestMapping("/auth")
 public class JwtAuthenticationController {
 
