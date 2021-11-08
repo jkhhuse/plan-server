@@ -32,6 +32,11 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public PersonDO findPersonByName(String name) {
+        return personDao.findByName(name);
+    }
+
+    @Override
     public String addPerson(PersonDTO personDTO) throws ParseException {
         // 判断用户邮箱不能重复
         List<PersonDO> personList = personDao.findByEmail(personDTO.getEmail());

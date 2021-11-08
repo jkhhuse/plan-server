@@ -27,6 +27,7 @@ public class PersonController {
     CommonResponse<PersonVO> getPerson(
             @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId) {
         PersonDO person = personService.findPersonById(userId);
+        person.setPaaswd("");
         return new CommonResponse("200", person, "");
     }
 

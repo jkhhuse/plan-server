@@ -9,6 +9,8 @@ public interface PersonService {
 
     PersonDO findPersonById(String uuid);
 
+    PersonDO findPersonByName(String name);
+
     /**
      * 新增用户信息
      * @param personDTO

@@ -3,8 +3,10 @@ package com.jkhhuse.plan.controller.auth;
 import com.jkhhuse.plan.common.CommonResponse;
 import com.jkhhuse.plan.dto.auth.AuthDTO;
 import com.jkhhuse.plan.dto.person.PersonDTO;
+import com.jkhhuse.plan.entity.person.PersonDO;
 import com.jkhhuse.plan.service.person.PersonService;
 import com.jkhhuse.plan.utils.JwtTokenUtil;
+import com.jkhhuse.plan.vo.auth.TokenVO;
 import com.jkhhuse.plan.vo.person.PersonVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -66,7 +68,13 @@ public class JwtAuthenticationController {
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        return new CommonResponse("200", token, "");
+        PersonDO personDO = personService.findPersonByName(authDTO.getUsername());
+
+        TokenVO tokenVO = new TokenVO();
+        tokenVO.setToken(token);
+        tokenVO.setUserId(personDO.getUuid());
+
+        return new CommonResponse("200", tokenVO, "");
     }
 
     private void authenticate(String username, String password) throws Exception {
