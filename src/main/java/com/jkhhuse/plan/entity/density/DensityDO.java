@@ -28,7 +28,7 @@ public class DensityDO implements Serializable {
 
     @Column(name="measure_time", nullable = false)
     @CreatedDate
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date measureTime;
 
     @Column(name="measure_value", nullable = false)

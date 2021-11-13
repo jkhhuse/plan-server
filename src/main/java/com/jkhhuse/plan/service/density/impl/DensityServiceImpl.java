@@ -23,7 +23,7 @@ public class DensityServiceImpl implements DensityService {
     public String addDensity(DensityDTO densityDTO) throws ParseException {
         DensityDO densityDO = new DensityDO();
         densityDO.setPersonUuid(densityDTO.getPersonUuid());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         densityDO.setMeasureTime(format.parse(densityDTO.getMeasureTime()));
         densityDO.setMeasureValue(densityDTO.getMeasureValue());
         densityDao.save(densityDO);

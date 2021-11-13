@@ -28,12 +28,12 @@ public class PersonDO implements Serializable {
 
     @Column(name="create_time", nullable = false)
     @CreatedDate
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createTime;
 
     @Column(name="born_time", nullable = false)
     @CreatedDate
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date bornTime;
 
     @Column(nullable = false)

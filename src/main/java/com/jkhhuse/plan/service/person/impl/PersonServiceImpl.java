@@ -53,7 +53,7 @@ public class PersonServiceImpl implements PersonService {
         // 插入人员数据
         PersonDO personDO = new PersonDO();
         personDO.setName(personDTO.getName());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         personDO.setBornTime(format.parse(personDTO.getBornTime()));
         personDO.setOrigin(personDTO.getOrigin());
         personDO.setCreateTime(new Date());
@@ -82,7 +82,7 @@ public class PersonServiceImpl implements PersonService {
 
         PersonDO personDO = personDao.findByUuid(uuid);
         personDO.setName(personDTO.getName());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         personDO.setBornTime(format.parse(personDTO.getBornTime()));
         personDO.setOrigin(personDTO.getOrigin());
         personDO.setCreateTime(new Date());
