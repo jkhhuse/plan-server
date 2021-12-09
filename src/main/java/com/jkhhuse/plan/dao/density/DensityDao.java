@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface DensityDao extends JpaRepository<DensityDO, Long> {
 
-	DensityDO findByUuid(long uuid);
+	DensityDO findByUuid(String uuid);
 
 	void deleteByUuid(String uuid);
 

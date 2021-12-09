@@ -73,6 +73,7 @@ public class JwtAuthenticationController {
         TokenVO tokenVO = new TokenVO();
         tokenVO.setToken(token);
         tokenVO.setUserId(personDO.getUuid());
+        tokenVO.setUserName(personDO.getName());
 
         return new CommonResponse("200", tokenVO, "");
     }

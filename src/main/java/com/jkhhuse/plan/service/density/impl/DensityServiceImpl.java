@@ -20,9 +20,9 @@ public class DensityServiceImpl implements DensityService {
     private DensityDao densityDao;
 
     @Override
-    public String addDensity(DensityDTO densityDTO) throws ParseException {
+    public String addDensity(String userId, DensityDTO densityDTO) throws ParseException {
         DensityDO densityDO = new DensityDO();
-        densityDO.setPersonUuid(densityDTO.getPersonUuid());
+        densityDO.setPersonUuid(userId);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         densityDO.setMeasureTime(format.parse(densityDTO.getMeasureTime()));
         densityDO.setMeasureValue(densityDTO.getMeasureValue());
@@ -55,16 +55,27 @@ public class DensityServiceImpl implements DensityService {
         try {
             results = densityDao.findByMeasureTimeBetween(formater.parse(startTime), formater.parse(endTime));
             Iterator<DensityDO> it = results.listIterator();
-            while(it.hasNext()) {
+            while (it.hasNext()) {
                 DensityDimensionDTO dto = new DensityDimensionDTO();
-                dto.setMeasureTime(formater.format(it.next().getMeasureTime()));
-                dto.setMeasureValue(it.next().getMeasureValue());
+                DensityDO densityDO = it.next();
+                dto.setMeasureTime(formater.format(densityDO.getMeasureTime()));
+                dto.setMeasureValue(densityDO.getMeasureValue());
                 dList.add(dto);
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return dList;
+    }
+
+    @Override
+    public String updateDensity(DensityDTO densityDTO, String densityId) throws ParseException {
+        DensityDO densityDO = densityDao.findByUuid(densityId);
+        SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+        densityDO.setMeasureTime(formater.parse(densityDTO.getMeasureTime()));
+        densityDO.setMeasureValue(densityDTO.getMeasureValue());
+        densityDao.save(densityDO);
+        return "更新成功";
     }
 
 }

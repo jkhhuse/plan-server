@@ -14,11 +14,13 @@ public interface DensityService {
      * @param densityDTO
      * @return
      */
-    String addDensity(DensityDTO densityDTO) throws ParseException;
+    String addDensity(String userId, DensityDTO densityDTO) throws ParseException;
 
     void deleteDensity(String densityUuid);
 
     int countMeasureDuplicate(String startTime, String endTime);
 
     List<DensityDimensionDTO> getDensitySet(String startTime, String endTime);
+
+    String updateDensity(DensityDTO densityDTO, String densityId) throws ParseException;
 }

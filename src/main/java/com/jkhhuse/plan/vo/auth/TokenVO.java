@@ -17,4 +17,7 @@ public class TokenVO {
 
     @ApiModelProperty(value = "token", required = true)
     private String token;
+
+    @ApiModelProperty(value = "userName", required = true)
+    private String userName;
 }

@@ -64,10 +64,9 @@ public class PersonServiceImpl implements PersonService {
 
         // 插入数据信息
         DensityDTO densityDTO = new DensityDTO();
-        densityDTO.setPersonUuid(result.getUuid());
         densityDTO.setMeasureTime(personDTO.getBornTime());
         densityDTO.setMeasureValue(personDTO.getOrigin());
-        densityService.addDensity(densityDTO);
+        densityService.addDensity(result.getUuid(), densityDTO);
 
         return result.getUuid();
     }
@@ -76,7 +75,7 @@ public class PersonServiceImpl implements PersonService {
     public String updatePerson(String uuid, PersonDTO personDTO) throws ParseException {
         // 验证密码是否正确
         List<PersonDO> list = personDao.findByPaaswdAndUuid(personDTO.getPaaswd(), String.valueOf(uuid));
-        if (list.size() == 0 ) {
+        if (list.size() == 0) {
             return "用户密码输入错误";
         }
 

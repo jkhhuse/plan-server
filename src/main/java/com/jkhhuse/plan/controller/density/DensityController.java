@@ -26,10 +26,11 @@ public class DensityController {
     @ApiOperation(value = "新增血值数据", notes = "新增一条记录")
     @PostMapping(value = "/add", consumes = "application/json")
     CommonResponse<List<DensityVO>> addDensity(
+            @RequestHeader("userId") String userId,
             @ApiParam(value = "血值信息", required = true) @Valid @RequestBody DensityDTO densityDTO) {
         String message = "";
         try {
-            message = densityService.addDensity(densityDTO);
+            message = densityService.addDensity(userId, densityDTO);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -70,6 +71,20 @@ public class DensityController {
         List<DensityDimensionDTO> list = new ArrayList<>();
         list = densityService.getDensitySet(startTime, endTime);
         return new CommonResponse("200", list, "");
+    }
+
+    @ApiOperation(value = "新增血值数据", notes = "新增一条记录")
+    @PostMapping(value = "/update/:densityId", consumes = "application/json")
+    CommonResponse<List<DensityVO>> updateDensity(
+            @ApiParam(value = "血值信息", required = true) @Valid @RequestBody DensityDTO densityDTO,
+            @ApiParam(value = "血值数据ID", required = true) @Valid @PathVariable String densityId) {
+        String message = "";
+        try {
+            message = densityService.updateDensity(densityDTO, densityId);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return new CommonResponse("200", "", message);
     }
 
 }
