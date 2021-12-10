@@ -9,8 +9,8 @@ import java.util.List;
 public interface DensityService {
 
     /**
-     * 新增用户信息
-     *
+     * 新增用户血值信息
+     * @param userId
      * @param densityDTO
      * @return
      */

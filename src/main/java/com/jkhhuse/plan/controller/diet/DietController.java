@@ -26,28 +26,29 @@ public class DietController {
     CommonResponse<List<DietVO>> addDiet(
             @RequestHeader("userId") String userId,
             @ApiParam(value = "饮食记录", required = true) @Valid @RequestBody DietDTO dietDTO) {
-        String message = "";
+        String uuid = "";
         try {
-            message = dietService.addDiet(userId, dietDTO);
+            uuid = dietService.addDiet(userId, dietDTO);
         } catch (Exception e) {
             System.out.println(e);
         }
-        return new CommonResponse("200", "", message);
+        return new CommonResponse("200", uuid, "");
     }
 
-    @ApiOperation(value = "新增饮食记录", notes = "新增一条记录")
-    @PostMapping(value = "/update/:dietId", consumes = "application/json")
+    @ApiOperation(value = "修改饮食记录", notes = "新增一条记录")
+    @PutMapping(value = "/update/:dietId", consumes = "application/json")
     CommonResponse<List<DietVO>> updateDiet(
             @ApiParam(value = "饮食记录ID", required = true) @Valid @PathVariable String dietId,
             @ApiParam(value = "血值信息", required = true) @Valid @RequestBody DietDTO dietDTO) {
-        String message = "";
         try {
-            message = dietService.updateDiet(dietId, dietDTO);
+            dietService.updateDiet(dietId, dietDTO);
         } catch (Exception e) {
             System.out.println(e);
         }
-        return new CommonResponse("200", "", message);
+        return new CommonResponse("200", "", "");
     }
+
+
 
 
 

@@ -1,4 +1,4 @@
-package com.jkhhuse.plan.dao.diet;
+package com.jkhhuse.plan.entity.diet;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -32,7 +32,7 @@ public class DietDO implements Serializable {
     private Date dietTime;
 
     @Column(name="phe_value", nullable = false)
-    private String pheValue;
+    private Float pheValue;
 
     @Column(name="diet_type", nullable = false)
     private String dietType;
