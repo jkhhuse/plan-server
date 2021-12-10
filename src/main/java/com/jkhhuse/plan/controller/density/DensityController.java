@@ -38,15 +38,16 @@ public class DensityController {
     }
 
     @ApiOperation(value = "删除血值数据", notes = "删除一条记录")
-    @DeleteMapping(value = "/delete", consumes = "application/json")
+    @DeleteMapping(value = "/delete/{densityUuid}")
     CommonResponse<List<DensityVO>> deleteDensity(
-            @ApiParam(value = "血值信息", required = true) @Valid @PathVariable String densityUuid) {
+            @ApiParam(value = "血值记录ID", required = true) @Valid @PathVariable String densityUuid) {
+        Boolean isSuccess = true;
         try {
-            densityService.deleteDensity(densityUuid);
+            isSuccess = densityService.deleteDensity(densityUuid);
         } catch (Exception e) {
             System.out.println(e);
         }
-        return new CommonResponse("200", "", "删除成功");
+        return new CommonResponse("200", isSuccess, isSuccess ? "删除成功" : "删除失败");
     }
 
     @ApiOperation(value = "判断血值数据是否存在重复", notes = "查询值范围")

@@ -22,7 +22,7 @@ public class DietServiceImpl implements DietService {
     @Override
     public String addDiet(String userId, DietDTO dietDTO) throws ParseException {
         DietDO dietDO = new DietDO();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dietDO.setDietTime(format.parse(dietDTO.getDietTime()));
         dietDO.setDietType(dietDTO.getDietType());
         dietDO.setPersonUuid(userId);
@@ -35,7 +35,7 @@ public class DietServiceImpl implements DietService {
     @Override
     public void updateDiet(String dietId, DietDTO dietDTO) throws ParseException {
         DietDO dietDO = dietDao.findByUuid(dietId);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dietDO.setDietTime(format.parse(dietDTO.getDietTime()));
         dietDO.setDietType(dietDO.getDietType());
         dietDO.setPheValue(dietDTO.getPheValue());
@@ -49,11 +49,12 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public List<DietDTO> findFixedDateDiets(String date) {
-        List<DietDO> results =  dietDao.findAllByDietTimeEquals(date);
+    public List<DietDTO> findFixedDateDiets(String date) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        List<DietDO> results = dietDao.findAllByDietTimeBetween(format.parse(date + " 00:00:00"), format.parse(date + " 24:00:00"));
         List<DietDTO> list = new ArrayList();
         Iterator<DietDO> it = results.iterator();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         while (it.hasNext()) {
             DietDO dietDO = it.next();
             DietDTO dietDTO = new DietDTO();

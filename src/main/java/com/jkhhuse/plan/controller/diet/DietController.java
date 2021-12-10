@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Api("desc of class")
@@ -35,9 +37,9 @@ public class DietController {
         return new CommonResponse("200", uuid, "");
     }
 
-    @ApiOperation(value = "修改饮食记录", notes = "新增一条记录")
-    @PutMapping(value = "/update/:dietId", consumes = "application/json")
-    CommonResponse<List<DietVO>> updateDiet(
+    @ApiOperation(value = "修改饮食记录", notes = "修改一条记录")
+    @PutMapping(value = "/update/{dietId}", consumes = "application/json")
+    CommonResponse<DietVO> updateDiet(
             @ApiParam(value = "饮食记录ID", required = true) @Valid @PathVariable String dietId,
             @ApiParam(value = "血值信息", required = true) @Valid @RequestBody DietDTO dietDTO) {
         try {
@@ -48,8 +50,29 @@ public class DietController {
         return new CommonResponse("200", "", "");
     }
 
+    @ApiOperation(value = "删除饮食记录", notes = "删除一条记录")
+    @DeleteMapping(value = "/delete/{dietId}")
+    CommonResponse<String> deleteDiet(
+            @ApiParam(value = "饮食记录ID", required = true) @Valid @PathVariable String dietId) {
+        try {
+            dietService.deleteDiet(dietId);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return new CommonResponse("200", "", "删除成功");
+    }
 
-
-
+    @ApiOperation(value = "删除饮食记录", notes = "删除一条记录")
+    @GetMapping(value = "/list/{date}")
+    CommonResponse<List<DietVO>> showSelectedDiet(
+            @ApiParam(value = "选择要查看的日期", required = true) @Valid @PathVariable String date) {
+        List<DietDTO> list = new ArrayList<>();
+        try {
+            list = dietService.findFixedDateDiets(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new CommonResponse("200", list, "数据获取成功");
+    }
 
 }

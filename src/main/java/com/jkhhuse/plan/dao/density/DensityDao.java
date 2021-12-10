@@ -13,6 +13,8 @@ public interface DensityDao extends JpaRepository<DensityDO, Long> {
 
 	DensityDO findByUuid(String uuid);
 
+	boolean existsByUuid(String uuid);
+
 	void deleteByUuid(String uuid);
 
 	/**

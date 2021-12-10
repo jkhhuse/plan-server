@@ -31,8 +31,13 @@ public class DensityServiceImpl implements DensityService {
     }
 
     @Override
-    public void deleteDensity(String densityUuid) {
+    public Boolean deleteDensity(String densityUuid) {
+        Boolean isExist = densityDao.existsByUuid(densityUuid);
+        if (!isExist) {
+            return false;
+        }
         densityDao.deleteByUuid(densityUuid);
+        return true;
     }
 
     @Override

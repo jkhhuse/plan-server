@@ -13,5 +13,5 @@ public interface DietService {
 
     void deleteDiet(String dietId);
 
-    List<DietDTO> findFixedDateDiets(String date);
+    List<DietDTO> findFixedDateDiets(String date) throws ParseException;
 }
