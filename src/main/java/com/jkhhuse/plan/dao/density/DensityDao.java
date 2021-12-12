@@ -15,6 +15,8 @@ public interface DensityDao extends JpaRepository<DensityDO, Long> {
 
 	boolean existsByUuid(String uuid);
 
+	int countAllByMeasureTime(String measureTime);
+
 	void deleteByUuid(String uuid);
 
 	/**

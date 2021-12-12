@@ -50,14 +50,13 @@ public class DensityController {
         return new CommonResponse("200", isSuccess, isSuccess ? "删除成功" : "删除失败");
     }
 
-    @ApiOperation(value = "判断血值数据是否存在重复", notes = "查询值范围")
-    @PostMapping(value = "/measure/range")
+    @ApiOperation(value = "判断血值数据是否存在重复", notes = "判断是否重复")
+    @PostMapping(value = "/duplicate/{measureTime}")
     CommonResponse<List<DensityVO>> isDensityDuplicate(
-            @ApiParam(value = "采血开始时间", required = true) @Valid @RequestParam String startTime,
-            @ApiParam(value = "采血结束时间", required = true) @Valid @RequestParam String endTime) {
-        int count = 0;
+            @ApiParam(value = "采血开始时间", required = true) @Valid @RequestParam String measureTime) {
+        boolean count = false;
         try {
-            count = densityService.countMeasureDuplicate(startTime, endTime);
+            count = densityService.countMeasureDuplicate(measureTime);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -65,7 +64,7 @@ public class DensityController {
     }
 
     @ApiOperation(value = "根据时间段获取血值的情况", notes = "血值情况查询")
-    @PostMapping(value = "/measure/dimension")
+    @GetMapping(value = "/dimension/range")
     CommonResponse<List<DensityVO>> searchDensitySet(
             @ApiParam(value = "采血开始时间", required = true) @Valid @RequestParam String startTime,
             @ApiParam(value = "采血结束时间", required = true) @Valid @RequestParam String endTime) {
@@ -75,17 +74,27 @@ public class DensityController {
     }
 
     @ApiOperation(value = "新增血值数据", notes = "新增一条记录")
-    @PostMapping(value = "/update/:densityId", consumes = "application/json")
+    @PostMapping(value = "/update/{densityUuId}", consumes = "application/json")
     CommonResponse<List<DensityVO>> updateDensity(
             @ApiParam(value = "血值信息", required = true) @Valid @RequestBody DensityDTO densityDTO,
-            @ApiParam(value = "血值数据ID", required = true) @Valid @PathVariable String densityId) {
+            @ApiParam(value = "血值数据ID", required = true) @Valid @PathVariable String densityUuId) {
         String message = "";
         try {
-            message = densityService.updateDensity(densityDTO, densityId);
+            message = densityService.updateDensity(densityDTO, densityUuId);
         } catch (Exception e) {
             System.out.println(e);
         }
         return new CommonResponse("200", "", message);
+    }
+
+    @ApiOperation(value = "全量获取血值数据", notes = "血值情况查询")
+    @GetMapping(value = "/dimension/all")
+    CommonResponse<List<DensityVO>> getAllDensitySet(
+            @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId
+    ) {
+        List<DensityDimensionDTO> list = new ArrayList<>();
+        list = densityService.getAllDensity(userId);
+        return new CommonResponse("200", list, "");
     }
 
 }
