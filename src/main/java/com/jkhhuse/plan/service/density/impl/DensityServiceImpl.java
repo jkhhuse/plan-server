@@ -26,8 +26,8 @@ public class DensityServiceImpl implements DensityService {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         densityDO.setMeasureTime(format.parse(densityDTO.getMeasureTime()));
         densityDO.setMeasureValue(densityDTO.getMeasureValue());
-        densityDao.save(densityDO);
-        return null;
+        DensityDO result = densityDao.save(densityDO);
+        return result.getUuid();
     }
 
     @Override
@@ -41,8 +41,9 @@ public class DensityServiceImpl implements DensityService {
     }
 
     @Override
-    public Boolean countMeasureDuplicate(String measureTime) {
-        int count = densityDao.countAllByMeasureTime(measureTime);
+    public Boolean countMeasureDuplicate(String measureTime) throws ParseException{
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        int count = densityDao.countAllByMeasureTime(formatter.parse(measureTime));
         return count == 0 ? false : true;
     }
 
@@ -70,11 +71,11 @@ public class DensityServiceImpl implements DensityService {
     @Override
     public String updateDensity(DensityDTO densityDTO, String densityUuid) throws ParseException {
         DensityDO densityDO = densityDao.findByUuid(densityUuid);
-        SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
-        densityDO.setMeasureTime(formater.parse(densityDTO.getMeasureTime()));
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        densityDO.setMeasureTime(formatter.parse(densityDTO.getMeasureTime()));
         densityDO.setMeasureValue(densityDTO.getMeasureValue());
-        densityDao.save(densityDO);
-        return "更新成功";
+        DensityDO result = densityDao.save(densityDO);
+        return result.getUuid();
     }
 
     @Override

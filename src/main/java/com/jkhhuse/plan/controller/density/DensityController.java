@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,13 +29,14 @@ public class DensityController {
     CommonResponse<List<DensityVO>> addDensity(
             @RequestHeader("userId") String userId,
             @ApiParam(value = "血值信息", required = true) @Valid @RequestBody DensityDTO densityDTO) {
-        String message = "";
+        String uuid = "";
         try {
-            message = densityService.addDensity(userId, densityDTO);
+            uuid = densityService.addDensity(userId, densityDTO);
         } catch (Exception e) {
             System.out.println(e);
+            return new CommonResponse("500", uuid, e.getMessage());
         }
-        return new CommonResponse("200", "", message);
+        return new CommonResponse("200", uuid, "创建成功");
     }
 
     @ApiOperation(value = "删除血值数据", notes = "删除一条记录")
@@ -52,15 +54,15 @@ public class DensityController {
 
     @ApiOperation(value = "判断血值数据是否存在重复", notes = "判断是否重复")
     @PostMapping(value = "/duplicate/{measureTime}")
-    CommonResponse<List<DensityVO>> isDensityDuplicate(
+    CommonResponse<Boolean> isDensityDuplicate(
             @ApiParam(value = "采血开始时间", required = true) @Valid @RequestParam String measureTime) {
-        boolean count = false;
+        boolean isExist = false;
         try {
-            count = densityService.countMeasureDuplicate(measureTime);
-        } catch (Exception e) {
+            isExist = densityService.countMeasureDuplicate(measureTime);
+        } catch (ParseException e) {
             System.out.println(e);
         }
-        return new CommonResponse("200", count, "");
+        return new CommonResponse("200", isExist, "");
     }
 
     @ApiOperation(value = "根据时间段获取血值的情况", notes = "血值情况查询")
@@ -73,18 +75,18 @@ public class DensityController {
         return new CommonResponse("200", list, "");
     }
 
-    @ApiOperation(value = "新增血值数据", notes = "新增一条记录")
+    @ApiOperation(value = "修改血值数据", notes = "根据时间修改血值数据")
     @PostMapping(value = "/update/{densityUuId}", consumes = "application/json")
     CommonResponse<List<DensityVO>> updateDensity(
             @ApiParam(value = "血值信息", required = true) @Valid @RequestBody DensityDTO densityDTO,
             @ApiParam(value = "血值数据ID", required = true) @Valid @PathVariable String densityUuId) {
-        String message = "";
+        String data = "";
         try {
-            message = densityService.updateDensity(densityDTO, densityUuId);
+            data = densityService.updateDensity(densityDTO, densityUuId);
         } catch (Exception e) {
-            System.out.println(e);
+            return new CommonResponse("500", data, "更新失败");
         }
-        return new CommonResponse("200", "", message);
+        return new CommonResponse("200", data, "更新成功");
     }
 
     @ApiOperation(value = "全量获取血值数据", notes = "血值情况查询")

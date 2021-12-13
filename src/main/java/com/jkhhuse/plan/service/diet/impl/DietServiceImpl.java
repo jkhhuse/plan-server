@@ -4,6 +4,7 @@ import com.jkhhuse.plan.entity.diet.DietDO;
 import com.jkhhuse.plan.dao.diet.DietDao;
 import com.jkhhuse.plan.dto.diet.DietDTO;
 import com.jkhhuse.plan.service.diet.DietService;
+import com.jkhhuse.plan.vo.diet.DietVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -49,15 +50,15 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public List<DietDTO> findFixedDateDiets(String date) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    public List<DietVO> findFixedDateDiets(String date) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<DietDO> results = dietDao.findAllByDietTimeBetween(format.parse(date + " 00:00:00"), format.parse(date + " 24:00:00"));
-        List<DietDTO> list = new ArrayList();
+        List<DietVO> list = new ArrayList();
         Iterator<DietDO> it = results.iterator();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         while (it.hasNext()) {
             DietDO dietDO = it.next();
-            DietDTO dietDTO = new DietDTO();
+            DietVO dietDTO = new DietVO();
             dietDTO.setDietTime(formatter.format(dietDO.getDietTime()));
             dietDTO.setDietType(dietDO.getDietType());
             dietDTO.setPheValue(dietDO.getPheValue());

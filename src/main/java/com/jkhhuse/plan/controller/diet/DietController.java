@@ -32,7 +32,7 @@ public class DietController {
         try {
             uuid = dietService.addDiet(userId, dietDTO);
         } catch (Exception e) {
-            System.out.println(e);
+            return new CommonResponse("400", uuid, "");
         }
         return new CommonResponse("200", uuid, "");
     }
@@ -52,7 +52,7 @@ public class DietController {
 
     @ApiOperation(value = "删除饮食记录", notes = "删除一条记录")
     @DeleteMapping(value = "/delete/{dietId}")
-    CommonResponse<String> deleteDiet(
+    CommonResponse<DietVO> deleteDiet(
             @ApiParam(value = "饮食记录ID", required = true) @Valid @PathVariable String dietId) {
         try {
             dietService.deleteDiet(dietId);
@@ -62,11 +62,11 @@ public class DietController {
         return new CommonResponse("200", "", "删除成功");
     }
 
-    @ApiOperation(value = "删除饮食记录", notes = "删除一条记录")
+    @ApiOperation(value = "根据日期查询当日的所有饮食记录", notes = "获得指定日期的饮食记录")
     @GetMapping(value = "/list/{date}")
     CommonResponse<List<DietVO>> showSelectedDiet(
             @ApiParam(value = "选择要查看的日期", required = true) @Valid @PathVariable String date) {
-        List<DietDTO> list = new ArrayList<>();
+        List<DietVO> list = new ArrayList<>();
         try {
             list = dietService.findFixedDateDiets(date);
         } catch (ParseException e) {

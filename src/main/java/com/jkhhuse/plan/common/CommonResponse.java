@@ -11,6 +11,9 @@ public class CommonResponse<T> {
   private MetaCode meta = new MetaCode();
   private T data = null;
 
+  public CommonResponse() {
+  }
+
   public CommonResponse(T data) {
     this.data = data;
   }

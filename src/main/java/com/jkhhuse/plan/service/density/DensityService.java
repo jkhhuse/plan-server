@@ -18,7 +18,7 @@ public interface DensityService {
 
     Boolean deleteDensity(String densityUuid);
 
-    Boolean countMeasureDuplicate(String measureTime);
+    Boolean countMeasureDuplicate(String measureTime) throws ParseException;
 
     List<DensityDimensionDTO> getDensitySet(String startTime, String endTime);
 

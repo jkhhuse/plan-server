@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
@@ -16,6 +17,7 @@ import javax.validation.constraints.NotNull;
 public class DietDTO {
 
     @ApiModelProperty(value = "dietTime", required = true)
+    @Pattern(regexp = "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$", message = "饮食时间格式不正确")
     @NotBlank(message = "饮食时间不能为空")
     private String dietTime;
 
@@ -24,6 +26,7 @@ public class DietDTO {
     private Float pheValue;
 
     @ApiModelProperty(value = "dietType", required = true)
+    @NotBlank(message = "饮食类型不可为空")
     private String dietType;
 
     @ApiModelProperty(value = "dietContent", required = true)
