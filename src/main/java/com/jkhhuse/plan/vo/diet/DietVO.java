@@ -12,7 +12,7 @@ import lombok.ToString;
 @ApiModel(description = "Diet 实体")
 public class DietVO {
 
-    @ApiModelProperty(value = "personUuid", required = true)
+    @ApiModelProperty(value = "personUuid", required = false)
     private String personUuid;
 
     @ApiModelProperty(value = "uuid", required = true)

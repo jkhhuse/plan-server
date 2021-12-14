@@ -27,7 +27,7 @@ public class DensityController {
     @ApiOperation(value = "新增血值数据", notes = "新增一条记录")
     @PostMapping(value = "/add", consumes = "application/json")
     CommonResponse<List<DensityVO>> addDensity(
-            @RequestHeader("userId") String userId,
+            @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId,
             @ApiParam(value = "血值信息", required = true) @Valid @RequestBody DensityDTO densityDTO) {
         String uuid = "";
         try {

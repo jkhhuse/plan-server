@@ -34,7 +34,7 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public void updateDiet(String dietId, DietDTO dietDTO) throws ParseException {
+    public String updateDiet(String dietId, DietDTO dietDTO) throws ParseException {
         DietDO dietDO = dietDao.findByUuid(dietId);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dietDO.setDietTime(format.parse(dietDTO.getDietTime()));
@@ -42,6 +42,7 @@ public class DietServiceImpl implements DietService {
         dietDO.setPheValue(dietDTO.getPheValue());
         dietDO.setDietContent(dietDTO.getDietContent());
         dietDao.save(dietDO);
+        return dietDO.getUuid();
     }
 
     @Override
@@ -58,12 +59,13 @@ public class DietServiceImpl implements DietService {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         while (it.hasNext()) {
             DietDO dietDO = it.next();
-            DietVO dietDTO = new DietVO();
-            dietDTO.setDietTime(formatter.format(dietDO.getDietTime()));
-            dietDTO.setDietType(dietDO.getDietType());
-            dietDTO.setPheValue(dietDO.getPheValue());
-            dietDTO.setDietContent(dietDO.getDietContent());
-            list.add(dietDTO);
+            DietVO dietVO = new DietVO();
+            dietVO.setUuid(dietDO.getUuid());
+            dietVO.setDietTime(formatter.format(dietDO.getDietTime()));
+            dietVO.setDietType(dietDO.getDietType());
+            dietVO.setPheValue(dietDO.getPheValue());
+            dietVO.setDietContent(dietDO.getDietContent());
+            list.add(dietVO);
         }
         return list;
     }

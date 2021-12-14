@@ -12,8 +12,8 @@ import lombok.ToString;
 @ApiModel(description = "Density 实体")
 public class DensityVO {
 
-    @ApiModelProperty(value = "personUuid", required = true)
-    private String personUuid;
+    @ApiModelProperty(value = "uuid", required = true)
+    private String uuid;
 
     @ApiModelProperty(value = "measureTime", required = true)
     private String measureTime;

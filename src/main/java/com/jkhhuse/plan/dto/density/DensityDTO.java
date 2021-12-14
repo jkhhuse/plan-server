@@ -15,9 +15,6 @@ import javax.validation.constraints.NotNull;
 @ApiModel(description = "Density DTO")
 public class DensityDTO {
 
-    @ApiModelProperty(value = "uuid")
-    private String uuid;
-
     @ApiModelProperty(value = "measureTime", required = true)
     @NotBlank(message = "测量时间不能为空")
     private String measureTime;

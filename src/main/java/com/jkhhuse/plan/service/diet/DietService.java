@@ -10,7 +10,7 @@ public interface DietService {
 
     String addDiet(String userId, DietDTO dietDTO) throws ParseException;
 
-    void updateDiet(String dietId, DietDTO dietDTO) throws ParseException;
+    String updateDiet(String dietId, DietDTO dietDTO) throws ParseException;
 
     void deleteDiet(String dietId);
 

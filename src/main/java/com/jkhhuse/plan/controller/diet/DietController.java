@@ -42,12 +42,13 @@ public class DietController {
     CommonResponse<DietVO> updateDiet(
             @ApiParam(value = "饮食记录ID", required = true) @Valid @PathVariable String dietId,
             @ApiParam(value = "血值信息", required = true) @Valid @RequestBody DietDTO dietDTO) {
+        String result = "";
         try {
-            dietService.updateDiet(dietId, dietDTO);
+            result = dietService.updateDiet(dietId, dietDTO);
         } catch (Exception e) {
             System.out.println(e);
         }
-        return new CommonResponse("200", "", "");
+        return new CommonResponse("200", result, "修改成功");
     }
 
     @ApiOperation(value = "删除饮食记录", notes = "删除一条记录")
