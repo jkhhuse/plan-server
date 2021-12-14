@@ -76,7 +76,7 @@ public class DensityController {
     }
 
     @ApiOperation(value = "修改血值数据", notes = "根据时间修改血值数据")
-    @PostMapping(value = "/update/{densityUuId}", consumes = "application/json")
+    @PutMapping(value = "/update/{densityUuId}", consumes = "application/json")
     CommonResponse<List<DensityVO>> updateDensity(
             @ApiParam(value = "血值信息", required = true) @Valid @RequestBody DensityDTO densityDTO,
             @ApiParam(value = "血值数据ID", required = true) @Valid @PathVariable String densityUuId) {
@@ -94,7 +94,7 @@ public class DensityController {
     CommonResponse<List<DensityVO>> getAllDensitySet(
             @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId
     ) {
-        List<DensityDimensionDTO> list = new ArrayList<>();
+        List<DensityDTO> list = new ArrayList<>();
         list = densityService.getAllDensity(userId);
         return new CommonResponse("200", list, "");
     }

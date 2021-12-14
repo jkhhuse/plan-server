@@ -17,7 +17,7 @@ import javax.validation.constraints.Pattern;
 public class DietDTO {
 
     @ApiModelProperty(value = "dietTime", required = true)
-    @Pattern(regexp = "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$", message = "饮食时间格式不正确")
+    @Pattern(regexp = "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$", message = "饮食时间格式不正确")
     @NotBlank(message = "饮食时间不能为空")
     private String dietTime;
 

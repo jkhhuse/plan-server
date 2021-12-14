@@ -74,17 +74,19 @@ public class DensityServiceImpl implements DensityService {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         densityDO.setMeasureTime(formatter.parse(densityDTO.getMeasureTime()));
         densityDO.setMeasureValue(densityDTO.getMeasureValue());
+        densityDO.setPersonUuid(densityDO.getPersonUuid());
         DensityDO result = densityDao.save(densityDO);
         return result.getUuid();
     }
 
     @Override
-    public List<DensityDimensionDTO> getAllDensity(String userId) {
-        List<DensityDO> list = densityDao.findAll();
-        List<DensityDimensionDTO> result = new ArrayList<>();
+    public List<DensityDTO> getAllDensity(String userId) {
+        List<DensityDO> list = densityDao.findAllByOrderByMeasureTimeDesc();
+        List<DensityDTO> result = new ArrayList<>();
         for (DensityDO densityDO : list) {
-            DensityDimensionDTO temp = new DensityDimensionDTO();
+            DensityDTO temp = new DensityDTO();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            temp.setUuid(densityDO.getUuid());
             temp.setMeasureTime(formatter.format(densityDO.getMeasureTime()));
             temp.setMeasureValue(densityDO.getMeasureValue());
             result.add(temp);

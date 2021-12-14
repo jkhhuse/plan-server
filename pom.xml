@@ -10,9 +10,9 @@
     <!-- lookup parent from repository -->
   </parent>
   <groupId>com.example</groupId>
-  <artifactId>demo</artifactId>
+  <artifactId>plan-server</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>demo</name>
+  <name>plan-server</name>
   <description>Demo project for Spring Boot</description>
   <properties>
     <java.version>11</java.version>
@@ -60,6 +60,13 @@
       <optional>true</optional>
     </dependency>
 
+    <!-- 添加 dozer -->
+    <dependency>
+      <groupId>net.sf.dozer</groupId>
+      <artifactId>dozer</artifactId>
+      <version>5.5.1</version>
+    </dependency>
+
     <!-- 显式添加JDBC依赖 -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -99,22 +106,12 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- 显式添加 redis依赖 -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-redis</artifactId>
-    </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-pool2</artifactId>
       <version>2.6.2</version>
     </dependency>
 
-    <!--引入kafka依赖-->
-    <dependency>
-      <groupId>org.springframework.kafka</groupId>
-      <artifactId>spring-kafka</artifactId>
-    </dependency>
     <!-- 添加 gson 依赖 -->
     <dependency>
       <groupId>com.google.code.gson</groupId>

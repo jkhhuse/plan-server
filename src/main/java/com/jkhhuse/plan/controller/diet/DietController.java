@@ -26,7 +26,7 @@ public class DietController {
     @ApiOperation(value = "新增饮食记录", notes = "新增一条记录")
     @PostMapping(value = "/add", consumes = "application/json")
     CommonResponse<List<DietVO>> addDiet(
-            @RequestHeader("userId") String userId,
+            @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId,
             @ApiParam(value = "饮食记录", required = true) @Valid @RequestBody DietDTO dietDTO) {
         String uuid = "";
         try {

@@ -24,5 +24,5 @@ public interface DensityService {
 
     String updateDensity(DensityDTO densityDTO, String densityUuid) throws ParseException;
 
-    List<DensityDimensionDTO> getAllDensity(String userId);
+    List<DensityDTO> getAllDensity(String userId);
 }

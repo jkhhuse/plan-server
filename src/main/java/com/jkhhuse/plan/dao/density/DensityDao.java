@@ -28,4 +28,11 @@ public interface DensityDao extends JpaRepository<DensityDO, Long> {
      * @return
      */
     List<DensityDO> findByMeasureTimeBetween(Date start, Date end);
+
+    /**
+     * 查询全部并且倒序排序
+     * @return
+     */
+    List<DensityDO> findAllByOrderByMeasureTimeDesc();
+
 }
