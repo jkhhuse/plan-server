@@ -25,4 +25,5 @@ public class DensityDTO {
     @ApiModelProperty(value = "measureValue", required = true)
     @NotNull(message = "测量值不能为空")
     private Float measureValue;
+
 }

@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -35,8 +36,15 @@ public class DietDO implements Serializable {
     private Float pheValue;
 
     @Column(name="diet_type", nullable = false)
-    private String dietType;
+    @NotNull
+    private Integer dietType;
 
     @Column(name="diet_content", nullable = false)
     private String dietContent;
+
+    @Column(name="special_milk", nullable = false)
+    private Integer specialMilk;
+
+    @Column(name="breast_milk", nullable = false)
+    private Integer breastMilk;
 }

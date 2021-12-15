@@ -3,8 +3,8 @@ package com.jkhhuse.plan.service.diet.impl;
 import com.jkhhuse.plan.entity.diet.DietDO;
 import com.jkhhuse.plan.dao.diet.DietDao;
 import com.jkhhuse.plan.dto.diet.DietDTO;
+import com.jkhhuse.plan.enumration.diet.DietTypeEnum;
 import com.jkhhuse.plan.service.diet.DietService;
-import com.jkhhuse.plan.vo.diet.DietVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,6 +29,11 @@ public class DietServiceImpl implements DietService {
         dietDO.setPersonUuid(userId);
         dietDO.setPheValue(dietDTO.getPheValue());
         dietDO.setDietContent(dietDTO.getDietContent());
+        if(dietDTO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
+            dietDO.setSpecialMilk(dietDTO.getSpecialMilk());
+        } else if (dietDTO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
+            dietDO.setBreastMilk(dietDTO.getBreastMilk());
+        }
         DietDO result = dietDao.save(dietDO);
         return result.getUuid();
     }
@@ -51,20 +56,25 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public List<DietVO> findFixedDateDiets(String date) throws ParseException {
+    public List<DietDTO> findFixedDateDiets(String date) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<DietDO> results = dietDao.findAllByDietTimeBetween(formatter.parse(date + " 00:00:00"), formatter.parse(date + " 24:00:00"));
-        List<DietVO> list = new ArrayList();
+        List<DietDTO> list = new ArrayList();
         Iterator<DietDO> it = results.iterator();
         while (it.hasNext()) {
             DietDO dietDO = it.next();
-            DietVO dietVO = new DietVO();
-            dietVO.setUuid(dietDO.getUuid());
-            dietVO.setDietTime(formatter.format(dietDO.getDietTime()));
-            dietVO.setDietType(dietDO.getDietType());
-            dietVO.setPheValue(dietDO.getPheValue());
-            dietVO.setDietContent(dietDO.getDietContent());
-            list.add(dietVO);
+            DietDTO dietDTO = new DietDTO();
+            dietDTO.setUuid(dietDO.getUuid());
+            dietDTO.setDietTime(formatter.format(dietDO.getDietTime()));
+            dietDTO.setDietType(dietDO.getDietType());
+            dietDTO.setPheValue(dietDO.getPheValue());
+            dietDTO.setDietContent(dietDO.getDietContent());
+            if(dietDO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
+                dietDTO.setSpecialMilk(dietDO.getSpecialMilk());
+            } else if (dietDO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
+                dietDTO.setBreastMilk(dietDO.getBreastMilk());
+            }
+            list.add(dietDTO);
         }
         return list;
     }

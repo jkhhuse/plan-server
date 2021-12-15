@@ -67,7 +67,7 @@ public class DietController {
     @GetMapping(value = "/list/{date}")
     CommonResponse<List<DietVO>> showSelectedDiet(
             @ApiParam(value = "选择要查看的日期", required = true) @Valid @PathVariable String date) {
-        List<DietVO> list = new ArrayList<>();
+        List<DietDTO> list = new ArrayList<>();
         try {
             list = dietService.findFixedDateDiets(date);
         } catch (ParseException e) {

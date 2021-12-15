@@ -33,4 +33,5 @@ public class DensityDO implements Serializable {
 
     @Column(name="measure_value", nullable = false)
     private Float measureValue;
+
 }
