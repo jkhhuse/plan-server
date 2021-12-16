@@ -5,9 +5,14 @@ import com.jkhhuse.plan.dto.density.DensityDTO;
 import com.jkhhuse.plan.dto.density.DensityDimensionDTO;
 import com.jkhhuse.plan.entity.density.DensityDO;
 import com.jkhhuse.plan.service.density.DensityService;
+import com.querydsl.core.Tuple;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +23,22 @@ import java.util.List;
 public class DensityServiceImpl implements DensityService {
     @Resource
     private DensityDao densityDao;
+
+    @PersistenceContext
+    private EntityManager em;
+
+    private List<DensityDTO> convertDTO (List<DensityDO> list) {
+        List<DensityDTO> result = new ArrayList<>();
+        for (DensityDO densityDO : list) {
+            DensityDTO temp = new DensityDTO();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            temp.setUuid(densityDO.getUuid());
+            temp.setMeasureTime(formatter.format(densityDO.getMeasureTime()));
+            temp.setMeasureValue(densityDO.getMeasureValue());
+            result.add(temp);
+        }
+        return result;
+    }
 
     @Override
     public String addDensity(String userId, DensityDTO densityDTO) throws ParseException {
@@ -82,16 +103,13 @@ public class DensityServiceImpl implements DensityService {
     @Override
     public List<DensityDTO> getAllDensity(String userId) {
         List<DensityDO> list = densityDao.findAllByOrderByMeasureTimeDesc();
-        List<DensityDTO> result = new ArrayList<>();
-        for (DensityDO densityDO : list) {
-            DensityDTO temp = new DensityDTO();
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            temp.setUuid(densityDO.getUuid());
-            temp.setMeasureTime(formatter.format(densityDO.getMeasureTime()));
-            temp.setMeasureValue(densityDO.getMeasureValue());
-            result.add(temp);
-        }
-        return result;
+        return convertDTO(list);
+    }
+
+    @Override
+    public List<DensityDTO> getTopDensity(Integer count) {
+        List<DensityDO> list = densityDao.findTopN(count);
+        return convertDTO(list);
     }
 
 }

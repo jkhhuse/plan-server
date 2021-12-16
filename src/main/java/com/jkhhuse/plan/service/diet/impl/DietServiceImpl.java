@@ -48,7 +48,7 @@ public class DietServiceImpl implements DietService {
         dietDO.setPersonUuid(userId);
         dietDO.setPheValue(dietDTO.getPheValue());
         dietDO.setDietContent(dietDTO.getDietContent());
-        if(dietDTO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
+         if(dietDTO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
             dietDO.setSpecialMilk(dietDTO.getSpecialMilk());
         } else if (dietDTO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
             dietDO.setBreastMilk(dietDTO.getBreastMilk());
@@ -77,7 +77,7 @@ public class DietServiceImpl implements DietService {
     @Override
     public List<DietDTO> findFixedDateDiets(String date) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        List<DietDO> results = dietDao.findAllByDietTimeBetween(formatter.parse(date + " 00:00:00"), formatter.parse(date + " 24:00:00"));
+        List<DietDO> results = dietDao.findAllByDietTimeBetween(formatter.parse(date + " 00:00:00"), formatter.parse(date + " 23:59:59"));
         List<DietDTO> list = new ArrayList();
         Iterator<DietDO> it = results.iterator();
         while (it.hasNext()) {

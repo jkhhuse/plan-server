@@ -99,4 +99,15 @@ public class DensityController {
         return new CommonResponse("200", list, "");
     }
 
+    @ApiOperation(value = "获取最近 N 次血值数据", notes = "血值情况查询")
+    @GetMapping(value = "/dimension/{count}")
+    CommonResponse<List<DensityVO>> getTopCountDensityList(
+            @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId,
+            @ApiParam(value = "topN", required = true) @Valid @PathVariable Integer count
+    ) {
+        List<DensityDTO> list = new ArrayList<>();
+        list = densityService.getTopDensity(count);
+        return new CommonResponse("200", list, "");
+    }
+
 }

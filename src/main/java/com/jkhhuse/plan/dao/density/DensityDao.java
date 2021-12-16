@@ -3,6 +3,7 @@ package com.jkhhuse.plan.dao.density;
 import com.jkhhuse.plan.entity.density.DensityDO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -34,5 +35,8 @@ public interface DensityDao extends JpaRepository<DensityDO, Long> {
      * @return
      */
     List<DensityDO> findAllByOrderByMeasureTimeDesc();
+
+    @Query(value = "select * from density order by measure_time desc limit :count", nativeQuery = true)
+    List<DensityDO> findTopN(Integer count);
 
 }
