@@ -76,4 +76,17 @@ public class DietController {
         return new CommonResponse("200", list, "数据获取成功");
     }
 
+    @ApiOperation(value = "根据日期查询当日的所有饮食记录", notes = "获得指定日期的饮食记录")
+    @GetMapping(value = "/findDiet/{dietId}")
+    CommonResponse<List<DietVO>> getDiet(
+            @ApiParam(value = "饮食记录ID", required = true) @Valid @PathVariable String dietId) {
+        DietDTO dietDTO = new DietDTO();
+        try {
+            dietDTO = dietService.findDietById(dietId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new CommonResponse("200", dietDTO, "数据获取成功");
+    }
+
 }

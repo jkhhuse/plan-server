@@ -5,6 +5,9 @@ import com.jkhhuse.plan.dao.diet.DietDao;
 import com.jkhhuse.plan.dto.diet.DietDTO;
 import com.jkhhuse.plan.enumration.diet.DietTypeEnum;
 import com.jkhhuse.plan.service.diet.DietService;
+import com.jkhhuse.plan.vo.diet.DietVO;
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,6 +22,22 @@ public class DietServiceImpl implements DietService {
 
     @Resource
     private DietDao dietDao;
+
+    private DietDTO convertToDietDTO(DietDO dietDO) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DietDTO dietDTO = new DietDTO();
+        dietDTO.setUuid(dietDO.getUuid());
+        dietDTO.setDietTime(formatter.format(dietDO.getDietTime()));
+        dietDTO.setDietType(dietDO.getDietType());
+        dietDTO.setPheValue(dietDO.getPheValue());
+        dietDTO.setDietContent(dietDO.getDietContent());
+        if(dietDO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
+            dietDTO.setSpecialMilk(dietDO.getSpecialMilk());
+        } else if (dietDO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
+            dietDTO.setBreastMilk(dietDO.getBreastMilk());
+        }
+        return dietDTO;
+    }
 
     @Override
     public String addDiet(String userId, DietDTO dietDTO) throws ParseException {
@@ -63,19 +82,15 @@ public class DietServiceImpl implements DietService {
         Iterator<DietDO> it = results.iterator();
         while (it.hasNext()) {
             DietDO dietDO = it.next();
-            DietDTO dietDTO = new DietDTO();
-            dietDTO.setUuid(dietDO.getUuid());
-            dietDTO.setDietTime(formatter.format(dietDO.getDietTime()));
-            dietDTO.setDietType(dietDO.getDietType());
-            dietDTO.setPheValue(dietDO.getPheValue());
-            dietDTO.setDietContent(dietDO.getDietContent());
-            if(dietDO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
-                dietDTO.setSpecialMilk(dietDO.getSpecialMilk());
-            } else if (dietDO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
-                dietDTO.setBreastMilk(dietDO.getBreastMilk());
-            }
-            list.add(dietDTO);
+            list.add(convertToDietDTO(dietDO));
         }
         return list;
     }
+
+    @Override
+    public DietDTO findDietById(String dietId) {
+        DietDO dietDO = dietDao.findByUuid(dietId);
+        return convertToDietDTO(dietDO);
+    }
+
 }
