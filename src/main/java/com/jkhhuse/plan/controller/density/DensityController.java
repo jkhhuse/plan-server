@@ -121,5 +121,4 @@ public class DensityController {
         return new CommonResponse("200", list, "");
     }
 
-
 }

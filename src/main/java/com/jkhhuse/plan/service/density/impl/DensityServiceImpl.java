@@ -40,6 +40,7 @@ public class DensityServiceImpl implements DensityService {
 
     /**
      * 装在 Scale 对象
+     *
      * @param name
      * @param value
      * @return
@@ -73,7 +74,7 @@ public class DensityServiceImpl implements DensityService {
     }
 
     @Override
-    public Boolean countMeasureDuplicate(String measureTime) throws ParseException{
+    public Boolean countMeasureDuplicate(String measureTime) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         int count = densityDao.countAllByMeasureTime(formatter.parse(measureTime));
         return count == 0 ? false : true;
@@ -125,17 +126,17 @@ public class DensityServiceImpl implements DensityService {
 
     @Override
     public List<DensityScaleDTO> countRangeDensity() {
-        Long low = densityDao.countLow();
-//        Integer normal =  densityDao.countNormal();
+        Integer low = densityDao.countLow();
+        Integer normal = densityDao.countNormal();
         Integer notice = densityDao.countNotice();
-//        int high = densityDao.countHigh();
-//        Integer danger = densityDao.countDanger();
+        int high = densityDao.countHigh();
+        Integer danger = densityDao.countDanger();
         List<DensityScaleDTO> densityScaleDTO = new ArrayList<>();
-        densityScaleDTO.add(loadDensityScaleDTO("0-2", 1));
-//        densityScaleDTO.set(1, loadDensityScaleDTO("2-4", normal));
-        densityScaleDTO.add( loadDensityScaleDTO("4-6", notice));
-//        densityScaleDTO.set(3, loadDensityScaleDTO("6-10", high));
-//        densityScaleDTO.set(4, loadDensityScaleDTO("10+", danger));
+        densityScaleDTO.add(loadDensityScaleDTO("0-2 mg/dl", low));
+        densityScaleDTO.add(loadDensityScaleDTO("2-4 mg/dl", normal));
+        densityScaleDTO.add(loadDensityScaleDTO("4-6 mg/dl", notice));
+        densityScaleDTO.add(loadDensityScaleDTO("6-10 mg/dl", high));
+        densityScaleDTO.add(loadDensityScaleDTO("10+ mg/dl", danger));
         return densityScaleDTO;
     }
 
