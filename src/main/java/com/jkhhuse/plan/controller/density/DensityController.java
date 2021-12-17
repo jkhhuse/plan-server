@@ -3,7 +3,9 @@ package com.jkhhuse.plan.controller.density;
 import com.jkhhuse.plan.common.CommonResponse;
 import com.jkhhuse.plan.dto.density.DensityDTO;
 import com.jkhhuse.plan.dto.density.DensityDimensionDTO;
+import com.jkhhuse.plan.dto.density.DensityScaleDTO;
 import com.jkhhuse.plan.service.density.DensityService;
+import com.jkhhuse.plan.vo.density.DensityScaleVO;
 import com.jkhhuse.plan.vo.density.DensityVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -109,5 +111,15 @@ public class DensityController {
         list = densityService.getTopDensity(count);
         return new CommonResponse("200", list, "");
     }
+
+
+    @ApiOperation(value = "获取血值健康度比例", notes = "血值情况查询")
+    @GetMapping(value = "/dimension/scale")
+    CommonResponse<List<DensityScaleVO>> getScaleDensityList(
+            @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId) {
+        List<DensityScaleDTO> list = densityService.countRangeDensity();
+        return new CommonResponse("200", list, "");
+    }
+
 
 }

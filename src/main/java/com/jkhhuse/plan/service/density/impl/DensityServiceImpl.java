@@ -3,11 +3,9 @@ package com.jkhhuse.plan.service.density.impl;
 import com.jkhhuse.plan.dao.density.DensityDao;
 import com.jkhhuse.plan.dto.density.DensityDTO;
 import com.jkhhuse.plan.dto.density.DensityDimensionDTO;
+import com.jkhhuse.plan.dto.density.DensityScaleDTO;
 import com.jkhhuse.plan.entity.density.DensityDO;
 import com.jkhhuse.plan.service.density.DensityService;
-import com.querydsl.core.Tuple;
-import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,7 +25,7 @@ public class DensityServiceImpl implements DensityService {
     @PersistenceContext
     private EntityManager em;
 
-    private List<DensityDTO> convertDTO (List<DensityDO> list) {
+    private List<DensityDTO> convertDTO(List<DensityDO> list) {
         List<DensityDTO> result = new ArrayList<>();
         for (DensityDO densityDO : list) {
             DensityDTO temp = new DensityDTO();
@@ -38,6 +36,19 @@ public class DensityServiceImpl implements DensityService {
             result.add(temp);
         }
         return result;
+    }
+
+    /**
+     * 装在 Scale 对象
+     * @param name
+     * @param value
+     * @return
+     */
+    private DensityScaleDTO loadDensityScaleDTO(String name, int value) {
+        DensityScaleDTO scale = new DensityScaleDTO();
+        scale.setName(name);
+        scale.setValue(value);
+        return scale;
     }
 
     @Override
@@ -110,6 +121,22 @@ public class DensityServiceImpl implements DensityService {
     public List<DensityDTO> getTopDensity(Integer count) {
         List<DensityDO> list = densityDao.findTopN(count);
         return convertDTO(list);
+    }
+
+    @Override
+    public List<DensityScaleDTO> countRangeDensity() {
+        Long low = densityDao.countLow();
+//        Integer normal =  densityDao.countNormal();
+        Integer notice = densityDao.countNotice();
+//        int high = densityDao.countHigh();
+//        Integer danger = densityDao.countDanger();
+        List<DensityScaleDTO> densityScaleDTO = new ArrayList<>();
+        densityScaleDTO.add(loadDensityScaleDTO("0-2", 1));
+//        densityScaleDTO.set(1, loadDensityScaleDTO("2-4", normal));
+        densityScaleDTO.add( loadDensityScaleDTO("4-6", notice));
+//        densityScaleDTO.set(3, loadDensityScaleDTO("6-10", high));
+//        densityScaleDTO.set(4, loadDensityScaleDTO("10+", danger));
+        return densityScaleDTO;
     }
 
 }

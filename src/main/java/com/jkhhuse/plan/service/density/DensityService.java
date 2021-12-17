@@ -2,6 +2,7 @@ package com.jkhhuse.plan.service.density;
 
 import com.jkhhuse.plan.dto.density.DensityDTO;
 import com.jkhhuse.plan.dto.density.DensityDimensionDTO;
+import com.jkhhuse.plan.dto.density.DensityScaleDTO;
 
 import java.text.ParseException;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface DensityService {
     List<DensityDTO> getAllDensity(String userId);
 
     List<DensityDTO> getTopDensity(Integer count);
+
+    List<DensityScaleDTO> countRangeDensity();
 }

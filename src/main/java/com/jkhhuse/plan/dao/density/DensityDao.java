@@ -39,4 +39,19 @@ public interface DensityDao extends JpaRepository<DensityDO, Long> {
     @Query(value = "select * from density order by measure_time desc limit :count", nativeQuery = true)
     List<DensityDO> findTopN(Integer count);
 
+    @Query(value="select count(uuid) from density where measure_value < 2")
+    Long countLow();
+
+//    @Query(value="select count(uuid) from density where measure_value >=2 and measure_value <= 4")
+//    Integer countNormal();
+
+    @Query(value="select count(uuid) from density where measure_value >4 and measure_value <= 6")
+    Integer countNotice();
+
+//    @Query(value="select count(uuid) from density where measure_value >6 and measure_value <= 10")
+//    Integer countHigh();
+
+//    @Query(value="select count(uuid) from density where measure_value >10")
+//    Integer countDanger();
+
 }
