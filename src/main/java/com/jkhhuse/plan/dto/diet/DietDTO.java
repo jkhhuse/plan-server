@@ -39,6 +39,9 @@ public class DietDTO {
     @ApiModelProperty(value = "specialMilk", required = false)
     private Integer specialMilk;
 
+    @ApiModelProperty(value = "smilkType", required = false)
+    private Integer smilkType;
+
     @ApiModelProperty(value = "breastMilk", required = false)
     private Integer breastMilk;
 }

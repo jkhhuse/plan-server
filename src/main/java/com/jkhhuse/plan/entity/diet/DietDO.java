@@ -45,6 +45,9 @@ public class DietDO implements Serializable {
     @Column(name="special_milk", nullable = false)
     private Integer specialMilk;
 
+    @Column(name="smilk_type", nullable = false)
+    private Integer smilkType;
+
     @Column(name="breast_milk", nullable = false)
     private Integer breastMilk;
 }

@@ -27,12 +27,15 @@ public class DietVO {
     @ApiModelProperty(value = "dietType", required = true)
     private String dietType;
 
-    @ApiModelProperty(value = "dietContent", required = true)
-    private String dietContent;
-
     @ApiModelProperty(value = "specialMilk", required = false)
     private Float specialMilk;
 
+    @ApiModelProperty(value = "smilkType", required = false)
+    private Integer smilkType;
+
     @ApiModelProperty(value = "breastMilk", required = false)
     private Float breastMilk;
+
+    @ApiModelProperty(value = "dietContent", required = true)
+    private String dietContent;
 }

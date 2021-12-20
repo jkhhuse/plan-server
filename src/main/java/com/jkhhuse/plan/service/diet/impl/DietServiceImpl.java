@@ -31,8 +31,9 @@ public class DietServiceImpl implements DietService {
         dietDTO.setDietType(dietDO.getDietType());
         dietDTO.setPheValue(dietDO.getPheValue());
         dietDTO.setDietContent(dietDO.getDietContent());
-        if(dietDO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
+        if (dietDO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
             dietDTO.setSpecialMilk(dietDO.getSpecialMilk());
+            dietDTO.setSpecialMilk(dietDO.getSmilkType());
         } else if (dietDO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
             dietDTO.setBreastMilk(dietDO.getBreastMilk());
         }
@@ -48,8 +49,9 @@ public class DietServiceImpl implements DietService {
         dietDO.setPersonUuid(userId);
         dietDO.setPheValue(dietDTO.getPheValue());
         dietDO.setDietContent(dietDTO.getDietContent());
-         if(dietDTO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
+        if (dietDTO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
             dietDO.setSpecialMilk(dietDTO.getSpecialMilk());
+            dietDO.setSpecialMilk(dietDO.getSmilkType());
         } else if (dietDTO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
             dietDO.setBreastMilk(dietDTO.getBreastMilk());
         }
@@ -65,6 +67,12 @@ public class DietServiceImpl implements DietService {
         dietDO.setDietType(dietDO.getDietType());
         dietDO.setPheValue(dietDTO.getPheValue());
         dietDO.setDietContent(dietDTO.getDietContent());
+        if (dietDTO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
+            dietDO.setSpecialMilk(dietDTO.getSpecialMilk());
+            dietDO.setSpecialMilk(dietDO.getSmilkType());
+        } else if (dietDTO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
+            dietDO.setBreastMilk(dietDTO.getBreastMilk());
+        }
         dietDao.save(dietDO);
         return dietDO.getUuid();
     }
