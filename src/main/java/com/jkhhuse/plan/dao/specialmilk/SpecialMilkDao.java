@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SpecialMilkDao extends JpaRepository<SpecialMilkDO, Long> {
 
-    SpecialMilkDO findByType(String type);
+    SpecialMilkDO findByType(Integer type);
 }

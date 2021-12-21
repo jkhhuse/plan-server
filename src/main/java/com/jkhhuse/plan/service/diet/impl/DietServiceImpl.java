@@ -5,9 +5,6 @@ import com.jkhhuse.plan.dao.diet.DietDao;
 import com.jkhhuse.plan.dto.diet.DietDTO;
 import com.jkhhuse.plan.enumration.diet.DietTypeEnum;
 import com.jkhhuse.plan.service.diet.DietService;
-import com.jkhhuse.plan.vo.diet.DietVO;
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

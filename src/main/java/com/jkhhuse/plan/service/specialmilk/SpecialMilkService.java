@@ -2,7 +2,7 @@ package com.jkhhuse.plan.service.specialmilk;
 
 import com.jkhhuse.plan.dto.specialmilk.SpecialMilkDTO;
 
-public interface SpecialMilk {
+public interface SpecialMilkService {
 
-    SpecialMilkDTO findSpecialMilk(String type);
+    SpecialMilkDTO findSpecialMilk(Integer type);
 }
