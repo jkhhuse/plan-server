@@ -30,7 +30,7 @@ public class DietServiceImpl implements DietService {
         dietDTO.setDietContent(dietDO.getDietContent());
         if (dietDO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
             dietDTO.setSpecialMilk(dietDO.getSpecialMilk());
-            dietDTO.setSpecialMilk(dietDO.getSmilkType());
+            dietDTO.setSmilkType(dietDO.getSmilkType());
         } else if (dietDO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
             dietDTO.setBreastMilk(dietDO.getBreastMilk());
         }
@@ -48,7 +48,7 @@ public class DietServiceImpl implements DietService {
         dietDO.setDietContent(dietDTO.getDietContent());
         if (dietDTO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
             dietDO.setSpecialMilk(dietDTO.getSpecialMilk());
-            dietDO.setSpecialMilk(dietDO.getSmilkType());
+            dietDO.setSmilkType(dietDTO.getSmilkType());
         } else if (dietDTO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
             dietDO.setBreastMilk(dietDTO.getBreastMilk());
         }
@@ -66,7 +66,7 @@ public class DietServiceImpl implements DietService {
         dietDO.setDietContent(dietDTO.getDietContent());
         if (dietDTO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
             dietDO.setSpecialMilk(dietDTO.getSpecialMilk());
-            dietDO.setSpecialMilk(dietDO.getSmilkType());
+            dietDO.setSpecialMilk(dietDTO.getSmilkType());
         } else if (dietDTO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
             dietDO.setBreastMilk(dietDTO.getBreastMilk());
         }
