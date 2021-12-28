@@ -5,11 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FoodDao extends JpaRepository<FoodDO, Long> {
 
-    FoodDO findByUuid(String uuid);
+    Optional<FoodDO> findByUuid(String uuid);
 
-    @Query(value="select from food where name like '%?%'")
+    @Query(value="select * from food where name like %?%", nativeQuery = true)
     List<FoodDO> searchFoodByName(String name);
 }

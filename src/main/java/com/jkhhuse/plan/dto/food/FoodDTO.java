@@ -37,11 +37,11 @@ public class FoodDTO {
     private String phe;
 
     @ApiModelProperty(value = "rule", required = true)
-    @NotNull(message = "红绿灯饮食规则不能为空")
-    private Integer rule;
+    @NotBlank(message = "红绿灯饮食规则不能为空")
+    private String rule;
 
     @ApiModelProperty(value = "type", required = true)
-    @NotNull(message = "是否估算值类型不能为空")
-    private Integer type;
+    @NotBlank(message = "估算值类型不能为空")
+    private String type;
 
 }

@@ -1,7 +1,6 @@
 package com.jkhhuse.plan.service.diet;
 
 import com.jkhhuse.plan.dto.diet.DietDTO;
-import com.jkhhuse.plan.vo.diet.DietVO;
 
 import java.text.ParseException;
 import java.util.List;

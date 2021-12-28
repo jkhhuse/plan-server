@@ -2,14 +2,18 @@ package com.jkhhuse.plan.service.food.impl;
 
 import com.jkhhuse.plan.dao.food.FoodDao;
 import com.jkhhuse.plan.dto.food.FoodDTO;
-import com.jkhhuse.plan.dto.specialmilk.SpecialMilkDTO;
 import com.jkhhuse.plan.entity.food.FoodDO;
 import com.jkhhuse.plan.service.food.FoodService;
-import org.dozer.DozerBeanMapper;
+import com.jkhhuse.plan.utils.CommonBeanUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class FoodServiceImpl implements FoodService {
 
     @Resource
@@ -18,16 +22,19 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public List<FoodDTO> searchFood(String name) {
         List<FoodDO> foods = foodDao.searchFoodByName(name);
-        DozerBeanMapper mapper = new DozerBeanMapper();
-        FoodDTO foodDTO = mapper.map(foods, FoodDTO.class);
-        return null;
+        return CommonBeanUtils.copyListProperties(foods, FoodDTO::new);
     }
 
     @Override
     public FoodDTO findFood(String uuid) {
-        FoodDO foodDO = foodDao.findByUuid(uuid);
-        DozerBeanMapper mapper = new DozerBeanMapper();
-        FoodDTO foodDTO = mapper.map(foodDO, FoodDTO.class);
-        return foodDTO;
+        Optional<FoodDO> foodDO = foodDao.findByUuid(uuid);
+
+        if (Optional.ofNullable(foodDO).isEmpty()) {
+            return null;
+        } else {
+            FoodDTO foodDTO = new FoodDTO();
+            BeanUtils.copyProperties(foodDO.get(), foodDTO);
+            return foodDTO;
+        }
     }
 }

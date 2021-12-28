@@ -25,7 +25,7 @@ public class FoodVO {
     private String phe;
 
     @ApiModelProperty(value = "rule", required = true)
-    private Integer rule;
+    private String rule;
 
     @ApiModelProperty(value = "type", required = true)
     private String type;

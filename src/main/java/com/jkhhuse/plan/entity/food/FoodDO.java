@@ -35,8 +35,10 @@ public class FoodDO implements Serializable {
     private String phe;
 
     @Column(name="rule", nullable = false)
-    private Integer rule;
+    @NotNull
+    private String rule;
 
     @Column(name="type", nullable = false)
+    @NotNull
     private String type;
 }
