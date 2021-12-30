@@ -105,7 +105,7 @@ public class DietServiceImpl implements DietService {
     @Override
     public List<DietDTO> findDietsByRange(String startDate, String endDate) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        List<DietDO> results = dietDao.findAllByDietTimeBetween(formatter.parse(startDate), formatter.parse(endDate));
+        List<DietDO> results = dietDao.findAllByDietTimeBetween(formatter.parse(startDate + " 00:00:00"), formatter.parse(endDate + " 00:00:00"));
         return getDietList(results);
     }
 
