@@ -43,4 +43,12 @@ public class DietDTO {
 
     @ApiModelProperty(value = "breastMilk", required = false)
     private Integer breastMilk;
+
+    @ApiModelProperty(value = "foodAmount", required = false)
+    private Float foodAmount;
+
+    @ApiModelProperty(value = "foodUuid", required = false)
+    private String foodUuid;
+
+
 }

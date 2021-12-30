@@ -50,4 +50,10 @@ public class DietDO implements Serializable {
 
     @Column(name="breast_milk", nullable = false)
     private Integer breastMilk;
+
+    @Column(name="food_amount", nullable = false)
+    private Float foodAmount;
+
+    @Column(name="food_uuid", nullable = false)
+    private String foodUuid;
 }

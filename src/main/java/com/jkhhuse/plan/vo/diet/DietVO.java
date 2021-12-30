@@ -38,4 +38,11 @@ public class DietVO {
 
     @ApiModelProperty(value = "dietContent", required = true)
     private String dietContent;
+
+    @ApiModelProperty(value = "foodAmount")
+    private Float foodAmount;
+
+    @ApiModelProperty(value = "foodUuid")
+    private String foodUuid;
+
 }

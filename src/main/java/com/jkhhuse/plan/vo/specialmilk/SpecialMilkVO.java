@@ -18,17 +18,14 @@ public class SpecialMilkVO {
     private String uuid;
 
     @ApiModelProperty(value = "name", required = true)
-    @NotBlank(message = "奶粉名称不能为空")
     private String name;
 
     @ApiModelProperty(value = "type", required = true)
-    @NotBlank(message = "奶粉类型不能为空")
     private Integer type;
 
     @ApiModelProperty(value = "protein", required = true)
-    @NotBlank(message = "蛋白质含量不能为空")
     private Float protein;
 
-    @ApiModelProperty(value = "content", required = false)
+    @ApiModelProperty(value = "content")
     private String content;
 }

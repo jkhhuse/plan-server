@@ -33,32 +33,24 @@ public class DietServiceImpl implements DietService {
             dietDTO.setSmilkType(dietDO.getSmilkType());
         } else if (dietDO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
             dietDTO.setBreastMilk(dietDO.getBreastMilk());
+        } else {
+            dietDTO.setFoodAmount(dietDO.getFoodAmount());
+            dietDTO.setFoodUuid(dietDO.getFoodUuid());
         }
         return dietDTO;
     }
 
-    @Override
-    public String addDiet(String userId, DietDTO dietDTO) throws ParseException {
-        DietDO dietDO = new DietDO();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        dietDO.setDietTime(format.parse(dietDTO.getDietTime()));
-        dietDO.setDietType(dietDTO.getDietType());
-        dietDO.setPersonUuid(userId);
-        dietDO.setPheValue(dietDTO.getPheValue());
-        dietDO.setDietContent(dietDTO.getDietContent());
-        if (dietDTO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
-            dietDO.setSpecialMilk(dietDTO.getSpecialMilk());
-            dietDO.setSmilkType(dietDTO.getSmilkType());
-        } else if (dietDTO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
-            dietDO.setBreastMilk(dietDTO.getBreastMilk());
+    private List<DietDTO> getDietList(List<DietDO> results) {
+        List<DietDTO> list = new ArrayList();
+        Iterator<DietDO> it = results.iterator();
+        while (it.hasNext()) {
+            DietDO dietDO = it.next();
+            list.add(convertToDietDTO(dietDO));
         }
-        DietDO result = dietDao.save(dietDO);
-        return result.getUuid();
+        return list;
     }
 
-    @Override
-    public String updateDiet(String dietId, DietDTO dietDTO) throws ParseException {
-        DietDO dietDO = dietDao.findByUuid(dietId);
+    private DietDO composeDietSave(DietDO dietDO, DietDTO dietDTO) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         dietDO.setDietTime(format.parse(dietDTO.getDietTime()));
         dietDO.setDietType(dietDO.getDietType());
@@ -69,8 +61,26 @@ public class DietServiceImpl implements DietService {
             dietDO.setSpecialMilk(dietDTO.getSmilkType());
         } else if (dietDTO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
             dietDO.setBreastMilk(dietDTO.getBreastMilk());
+        } else {
+            dietDO.setFoodAmount(dietDTO.getFoodAmount());
+            dietDO.setFoodUuid(dietDTO.getFoodUuid());
         }
-        dietDao.save(dietDO);
+        return dietDO;
+    }
+
+    @Override
+    public String addDiet(String userId, DietDTO dietDTO) throws ParseException {
+        DietDO dietDO = new DietDO();
+        dietDO.setDietType(dietDTO.getDietType());
+        dietDO.setPersonUuid(userId);
+        DietDO result = dietDao.save(composeDietSave(dietDO, dietDTO));
+        return result.getUuid();
+    }
+
+    @Override
+    public String updateDiet(String dietId, DietDTO dietDTO) throws ParseException {
+        DietDO dietDO = dietDao.findByUuid(dietId);
+        dietDao.save(composeDietSave(dietDO, dietDTO));
         return dietDO.getUuid();
     }
 
@@ -83,19 +93,20 @@ public class DietServiceImpl implements DietService {
     public List<DietDTO> findFixedDateDiets(String date) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<DietDO> results = dietDao.findAllByDietTimeBetween(formatter.parse(date + " 00:00:00"), formatter.parse(date + " 23:59:59"));
-        List<DietDTO> list = new ArrayList();
-        Iterator<DietDO> it = results.iterator();
-        while (it.hasNext()) {
-            DietDO dietDO = it.next();
-            list.add(convertToDietDTO(dietDO));
-        }
-        return list;
+        return getDietList(results);
     }
 
     @Override
     public DietDTO findDietById(String dietId) {
         DietDO dietDO = dietDao.findByUuid(dietId);
         return convertToDietDTO(dietDO);
+    }
+
+    @Override
+    public List<DietDTO> findDietsByRange(String startDate, String endDate) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<DietDO> results = dietDao.findAllByDietTimeBetween(formatter.parse(startDate), formatter.parse(endDate));
+        return getDietList(results);
     }
 
 }
