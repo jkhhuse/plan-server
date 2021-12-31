@@ -56,4 +56,8 @@ public class DietDO implements Serializable {
 
     @Column(name="food_uuid", nullable = false)
     private String foodUuid;
+
+    @Column(name="food_name", nullable = false)
+    private String foodName;
+
 }

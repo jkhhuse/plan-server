@@ -50,5 +50,7 @@ public class DietDTO {
     @ApiModelProperty(value = "foodUuid", required = false)
     private String foodUuid;
 
+    @ApiModelProperty(value = "foodName", required = false)
+    private String foodName;
 
 }

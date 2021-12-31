@@ -36,6 +36,7 @@ public class DietServiceImpl implements DietService {
         } else {
             dietDTO.setFoodAmount(dietDO.getFoodAmount());
             dietDTO.setFoodUuid(dietDO.getFoodUuid());
+            dietDTO.setFoodName(dietDO.getFoodName());
         }
         return dietDTO;
     }
@@ -64,6 +65,7 @@ public class DietServiceImpl implements DietService {
         } else {
             dietDO.setFoodAmount(dietDTO.getFoodAmount());
             dietDO.setFoodUuid(dietDTO.getFoodUuid());
+            dietDO.setFoodName(dietDTO.getFoodName());
         }
         return dietDO;
     }

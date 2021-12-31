@@ -56,24 +56,32 @@ public class StatisticsImpl implements StatisticsService {
                 DecimalFormat df = new DecimalFormat("#.00");
                 Float specialProtein = 0.0F;
                 // 根据特奶类型来觉得蛋白质如何计算
-                if(diet.getSmilkType() == 0) {
+                if(diet.getSmilkType() != null && diet.getSmilkType() == 0) {
                     String specialProteinStr = df.format(diet.getSpecialMilk() / specialMilkType0.getProtein());
                     specialProtein = Float.parseFloat(specialProteinStr);
                 }
                 // 获得特殊奶粉类型，从而计算蛋白质含量
-                specialProteinSum = specialProteinSum + specialProtein;
+                if (diet.getSpecialMilk() != null) {
+                    specialProteinSum = specialProteinSum + specialProtein;
+                }
 
-                // 母乳蛋白质计算，100ml 1.1g 蛋白质
-                String breastProtein = df.format(diet.getBreastMilk() / 100 * 1.1F);
-                breastProteinSum = breastProteinSum + Float.parseFloat(breastProtein);
+                // 母乳蛋白质计算，100ml 1.2g 蛋白质
+                if (diet.getBreastMilk() != null) {
+                    String breastProtein = df.format(diet.getBreastMilk() / 100 * 1.2F);
+                    breastProteinSum = breastProteinSum + Float.parseFloat(breastProtein);
+                }
 
                 // 天然食物蛋白质计算
-                String foodUuid = diet.getFoodUuid();
-                FoodDTO food = foodService.findFood(foodUuid);
-                // TODO: protein 为 -（空）的情况
-                Float foodProtein = Float.parseFloat(food.getProtein());
-                FoodProteinSum = FoodProteinSum + foodProtein * (diet.getFoodAmount() / 100);
+                if (diet.getFoodUuid() != null) {
+                    String foodUuid = diet.getFoodUuid();
+                    FoodDTO food = foodService.findFood(foodUuid);
+                    // TODO: protein 为 -（空）的情况
+                    Float foodProtein = Float.parseFloat(food.getProtein());
+                    FoodProteinSum = FoodProteinSum + foodProtein * (diet.getFoodAmount() / 100);
+                }
             }
+
+            // 对 A/B/C 分类计算，B/C ==> 天然，A ==> 特殊
 
             statisticsDTO.setTotalProtein(0F);
             statisticsDTO.setPheValue(pheValueSum / days);
@@ -85,9 +93,8 @@ public class StatisticsImpl implements StatisticsService {
         }
 
 
-        // 对 A/B/C 分类计算，B/C ==> 天然，A ==> 特殊
 
         // 对结果汇总输出
-        return null;
+        return statisticsDTO;
     }
 }

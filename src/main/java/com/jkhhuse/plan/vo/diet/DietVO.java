@@ -45,4 +45,6 @@ public class DietVO {
     @ApiModelProperty(value = "foodUuid")
     private String foodUuid;
 
+    @ApiModelProperty(value = "foodName")
+    private String foodName;
 }
