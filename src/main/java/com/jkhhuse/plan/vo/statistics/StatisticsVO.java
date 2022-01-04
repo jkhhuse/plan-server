@@ -15,6 +15,9 @@ public class StatisticsVO {
     @ApiModelProperty(value = "specialProtein", required = true)
     private Float specialProtein;
 
+    @ApiModelProperty(value = "specialProteinMl", required = true)
+    private Float specialProteinMl;
+
     @ApiModelProperty(value = "natureProtein", required = true)
     private Float natureProtein;
 

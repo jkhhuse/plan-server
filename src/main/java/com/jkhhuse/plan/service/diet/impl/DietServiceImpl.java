@@ -59,7 +59,7 @@ public class DietServiceImpl implements DietService {
         dietDO.setDietContent(dietDTO.getDietContent());
         if (dietDTO.getDietType().intValue() == DietTypeEnum.SPECIAL_MILK.getIndex()) {
             dietDO.setSpecialMilk(dietDTO.getSpecialMilk());
-            dietDO.setSpecialMilk(dietDTO.getSmilkType());
+            dietDO.setSmilkType(dietDTO.getSmilkType());
         } else if (dietDTO.getDietType().intValue() == DietTypeEnum.BREAST_MILK.getIndex()) {
             dietDO.setBreastMilk(dietDTO.getBreastMilk());
         } else {

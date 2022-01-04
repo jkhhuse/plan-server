@@ -18,6 +18,10 @@ public class StatisticsDTO {
     @NotBlank(message = "特殊蛋白质含量不能为空")
     private Float specialProtein;
 
+    @ApiModelProperty(value = "specialProteinMl", required = true)
+    @NotBlank(message = "特殊蛋白质毫升不能为空")
+    private Float specialProteinMl;
+
     @ApiModelProperty(value = "natureProtein", required = true)
     @NotBlank(message = "天然蛋白质含量不能为空")
     private Float natureProtein;

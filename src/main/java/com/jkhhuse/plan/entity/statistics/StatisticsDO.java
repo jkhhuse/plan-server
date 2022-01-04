@@ -28,7 +28,7 @@ public class StatisticsDO {
     @Column(name="measure_time", nullable = false)
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @NotBlank
+    @NotNull
     private Date measureTime;
 
     @Column(name="days", nullable = false)
@@ -38,6 +38,10 @@ public class StatisticsDO {
     @Column(name="special_protein", nullable = false)
     @NotNull
     private Float specialProtein;
+
+    @Column(name="special_protein_ml", nullable = false)
+    @NotNull
+    private Float specialProteinMl;
 
     @Column(name="nature_protein", nullable = false)
     @NotNull
