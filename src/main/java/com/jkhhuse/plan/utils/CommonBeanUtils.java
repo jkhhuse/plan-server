@@ -1,7 +1,6 @@
 package com.jkhhuse.plan.utils;
 
 import org.springframework.beans.BeanUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
