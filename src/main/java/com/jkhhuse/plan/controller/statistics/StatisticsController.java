@@ -1,6 +1,7 @@
 package com.jkhhuse.plan.controller.statistics;
 
 import com.jkhhuse.plan.common.CommonResponse;
+import com.jkhhuse.plan.dto.statistics.StatisticsDTO;
 import com.jkhhuse.plan.service.statistics.StatisticsService;
 import com.jkhhuse.plan.vo.statistics.StatisticsVO;
 import io.swagger.annotations.Api;
@@ -28,10 +29,15 @@ public class StatisticsController {
             @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId,
             @ApiParam(value = "测量时间", required = true) @Valid @RequestParam String measureTime,
             @ApiParam(value = "天数", required = true) @Valid @RequestParam Integer days
-            ) {
+    ) {
         StatisticsVO statisticsVO = new StatisticsVO();
         try {
-            BeanUtils.copyProperties(statisticsVO, statisticsService.searchLatestStats(userId, measureTime, days));
+            StatisticsDTO statisticsDTO = statisticsService.searchLatestStats(userId, measureTime, days);
+            if (statisticsDTO != null) {
+                BeanUtils.copyProperties(statisticsVO, statisticsDTO);
+            } else {
+                return new CommonResponse("500", null, "数据获取失败");
+            }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {

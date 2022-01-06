@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Api("desc of class")
@@ -124,10 +125,10 @@ public class DensityController {
 
     @ApiOperation(value = "获得最近测量血值时间", notes = "获得measureTime")
     @GetMapping(value = "/latest")
-    CommonResponse<DensityScaleVO> getLatestMeasureTime(
+    CommonResponse<Date> getLatestMeasureTime(
             @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId) {
-        List<DensityScaleDTO> list = densityService.countRangeDensity(userId);
-        return new CommonResponse("200", list, "");
+        Date measureTime = densityService.getLatestMeasureTime(userId);
+        return new CommonResponse("200", measureTime, "");
     }
 
 }

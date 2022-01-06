@@ -54,7 +54,7 @@ public interface DensityDao extends JpaRepository<DensityDO, Long> {
     @Query(value="select count(uuid) from density where person_uuid =?1 and measure_value >10", nativeQuery = true)
     Integer countDanger(String userId);
 
-    @Query(value="select measureTime from density where person_uuid =?1 order by measure_time desc limit 1", nativeQuery = true)
+    @Query(value="select measure_time from density where person_uuid =?1 order by measure_time desc limit 1", nativeQuery = true)
     Date getLatestMeasureTime(String userId);
 
 }

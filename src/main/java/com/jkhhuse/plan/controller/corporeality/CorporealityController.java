@@ -6,7 +6,6 @@ import com.jkhhuse.plan.service.corporeality.CorporealityService;
 import com.jkhhuse.plan.vo.corporeality.CorporealityHeightVO;
 import com.jkhhuse.plan.vo.corporeality.CorporealityVO;
 import com.jkhhuse.plan.vo.corporeality.CorporealityWeightVO;
-import com.jkhhuse.plan.vo.density.DensityVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

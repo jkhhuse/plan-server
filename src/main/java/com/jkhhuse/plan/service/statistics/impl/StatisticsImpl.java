@@ -115,10 +115,10 @@ public class StatisticsImpl implements StatisticsService {
     @Override
     public StatisticsDTO searchLatestStats(String userId, String measureTime, Integer days) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Optional<StatisticsDO> statisticsDO =  statisticsDao.findByMeasureTimeAndDaysAndPersonUuid(userId, formatter.parse(measureTime), days);
+        Optional<StatisticsDO> statisticsDO = statisticsDao.findByPersonUuidAndMeasureTimeAndDays(userId, formatter.parse(measureTime), days);
 
-        if(Optional.ofNullable(statisticsDO).isEmpty()) {
-            return  null;
+        if (!statisticsDO.isPresent()) {
+            return null;
         } else {
             StatisticsDTO statisticsDTO = new StatisticsDTO();
             BeanUtils.copyProperties(statisticsDO.get(), statisticsDTO);
@@ -131,12 +131,13 @@ public class StatisticsImpl implements StatisticsService {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         // 删除重复的 measureTime 数据
-        statisticsDao.deleteByMeasureTimeAndPersonUuid(userId, formatter.parse(measureTime));
+        statisticsDao.deleteByPersonUuidAndMeasureTime(userId, formatter.parse(measureTime));
 
         LocalDate endDate = LocalDate.of(Integer.parseInt(measureTime.split("-")[0]), Integer.parseInt(measureTime.split("-")[1]), Integer.parseInt(measureTime.split("-")[2]));
         StatisticsDTO statisticsThreeDayDTO = latestDayStats(userId, endDate.minusDays(3).format(DateTimeFormatter.ISO_LOCAL_DATE), measureTime, 3);
         StatisticsDO threeDayDo = new StatisticsDO();
         BeanUtils.copyProperties(statisticsThreeDayDTO, threeDayDo);
+        threeDayDo.setPersonUuid(userId);
         threeDayDo.setDays(3);
         threeDayDo.setMeasureTime(formatter.parse(measureTime));
         statisticsDao.save(threeDayDo);
@@ -144,6 +145,7 @@ public class StatisticsImpl implements StatisticsService {
         StatisticsDTO statisticsSevenDayDTO = latestDayStats(userId, endDate.minusDays(7).format(DateTimeFormatter.ISO_LOCAL_DATE), measureTime, 7);
         StatisticsDO sevenDayDo = new StatisticsDO();
         BeanUtils.copyProperties(statisticsSevenDayDTO, sevenDayDo);
+        sevenDayDo.setPersonUuid(userId);
         sevenDayDo.setDays(7);
         sevenDayDo.setMeasureTime(formatter.parse(measureTime));
         statisticsDao.save(sevenDayDo);

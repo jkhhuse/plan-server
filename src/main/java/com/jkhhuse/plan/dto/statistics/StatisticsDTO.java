@@ -14,6 +14,10 @@ import javax.validation.constraints.NotBlank;
 @ApiModel(description = "Statistics DTO")
 public class StatisticsDTO {
 
+    @ApiModelProperty(value = "personUuid", required = true)
+    @NotBlank(message = "personUuid 不能为空")
+    private String personUuid;
+
     @ApiModelProperty(value = "specialProtein", required = true)
     @NotBlank(message = "特殊蛋白质含量不能为空")
     private Float specialProtein;
