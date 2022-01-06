@@ -66,10 +66,11 @@ public class DietController {
     @ApiOperation(value = "根据日期查询当日的所有饮食记录", notes = "获得指定日期的饮食记录")
     @GetMapping(value = "/list/{date}")
     CommonResponse<List<DietVO>> showSelectedDiet(
+            @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId,
             @ApiParam(value = "选择要查看的日期", required = true) @Valid @PathVariable String date) {
         List<DietDTO> list = new ArrayList<>();
         try {
-            list = dietService.findFixedDateDiets(date);
+            list = dietService.findFixedDateDiets(userId, date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -79,6 +80,7 @@ public class DietController {
     @ApiOperation(value = "根据日期查询当日的所有饮食记录", notes = "获得指定日期的饮食记录")
     @GetMapping(value = "/findDiet/{dietId}")
     CommonResponse<List<DietVO>> getDiet(
+            @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId,
             @ApiParam(value = "饮食记录ID", required = true) @Valid @PathVariable String dietId) {
         DietDTO dietDTO = new DietDTO();
         try {

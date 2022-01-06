@@ -92,9 +92,9 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public List<DietDTO> findFixedDateDiets(String date) throws ParseException {
+    public List<DietDTO> findFixedDateDiets(String userId, String date) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        List<DietDO> results = dietDao.findAllByDietTimeBetween(formatter.parse(date + " 00:00:00"), formatter.parse(date + " 23:59:59"));
+        List<DietDO> results = dietDao.findAllByPersonUuidAndDietTimeBetween(userId, formatter.parse(date + " 00:00:00"), formatter.parse(date + " 23:59:59"));
         return getDietList(results);
     }
 
@@ -105,9 +105,9 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public List<DietDTO> findDietsByRange(String startDate, String endDate) throws ParseException {
+    public List<DietDTO> findDietsByRange(String userId, String startDate, String endDate) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        List<DietDO> results = dietDao.findAllByDietTimeBetween(formatter.parse(startDate + " 00:00:00"), formatter.parse(endDate + " 00:00:00"));
+        List<DietDO> results = dietDao.findAllByPersonUuidAndDietTimeBetween(userId, formatter.parse(startDate + " 00:00:00"), formatter.parse(endDate + " 00:00:00"));
         return getDietList(results);
     }
 

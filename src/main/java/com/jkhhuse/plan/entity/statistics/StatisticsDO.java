@@ -25,6 +25,10 @@ public class StatisticsDO {
     @GenericGenerator(name = "system_uuid", strategy = "uuid")
     private String uuid;
 
+    @Column(name="person_uuid", nullable = false)
+    @NotNull
+    private String personUuid;
+
     @Column(name="measure_time", nullable = false)
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")

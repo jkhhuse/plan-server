@@ -15,7 +15,7 @@ public interface DensityDao extends JpaRepository<DensityDO, Long> {
 
     boolean existsByUuid(String uuid);
 
-    int countAllByMeasureTime(Date measureTime);
+    int countAllByMeasureTimeAndPersonUuid(String personUuid, Date measureTime);
 
     @Modifying
     @Transactional(rollbackFor = RuntimeException.class)
@@ -28,30 +28,33 @@ public interface DensityDao extends JpaRepository<DensityDO, Long> {
      * @param end   结束时间
      * @return
      */
-    List<DensityDO> findByMeasureTimeBetween(Date start, Date end);
+    List<DensityDO> findByPersonUuidAndMeasureTimeBetween(String personUuid, Date start, Date end);
 
     /**
      * 查询全部并且倒序排序
      * @return
      */
-    List<DensityDO> findAllByOrderByMeasureTimeDesc();
+    List<DensityDO> findAllByPersonUuidOrderByMeasureTimeDesc(String personUuid);
 
-    @Query(value = "select * from density order by measure_time desc limit :count", nativeQuery = true)
-    List<DensityDO> findTopN(Integer count);
+    @Query(value = "select * from density where person_uuid =:userId order by measure_time desc limit :count", nativeQuery = true)
+    List<DensityDO> findTopNByPersonUuid(String userId, Integer count);
 
-    @Query(value="select count(uuid) from density where measure_value < 2", nativeQuery = true)
-    Integer countLow();
+    @Query(value="select count(uuid) from density where person_uuid =?1 and measure_value < 2", nativeQuery = true)
+    Integer countLow(String userId);
 
-    @Query(value="select count(uuid) from density where measure_value >=2 and measure_value <= 4", nativeQuery = true)
-    Integer countNormal();
+    @Query(value="select count(uuid) from density where person_uuid =?1 and measure_value >=2 and measure_value <= 4", nativeQuery = true)
+    Integer countNormal(String userId);
 
-    @Query(value="select count(uuid) from density where measure_value >4 and measure_value <= 6", nativeQuery = true)
-    Integer countNotice();
+    @Query(value="select count(uuid) from density where person_uuid =?1 and measure_value >4 and measure_value <= 6", nativeQuery = true)
+    Integer countNotice(String userId);
 
-    @Query(value="select count(uuid) from density where measure_value >6 and measure_value <= 10", nativeQuery = true)
-    Integer countHigh();
+    @Query(value="select count(uuid) from density where person_uuid =?1 and measure_value >6 and measure_value <= 10", nativeQuery = true)
+    Integer countHigh(String userId);
 
-    @Query(value="select count(uuid) from density where measure_value >10", nativeQuery = true)
-    Integer countDanger();
+    @Query(value="select count(uuid) from density where person_uuid =?1 and measure_value >10", nativeQuery = true)
+    Integer countDanger(String userId);
+
+    @Query(value="select measureTime from density where person_uuid =?1 order by measure_time desc limit 1", nativeQuery = true)
+    Date getLatestMeasureTime(String userId);
 
 }

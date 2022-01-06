@@ -16,5 +16,5 @@ public interface DietDao extends JpaRepository<DietDO, Long> {
     @Transactional(rollbackFor = RuntimeException.class)
     void deleteByUuid(String uuid);
 
-    List<DietDO> findAllByDietTimeBetween(Date startTime, Date endTime);
+    List<DietDO> findAllByPersonUuidAndDietTimeBetween(String personUuid, Date startTime, Date endTime);
 }

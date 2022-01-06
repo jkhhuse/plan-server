@@ -41,7 +41,7 @@ public class StatisticsImpl implements StatisticsService {
     private StatisticsDao statisticsDao;
 
     @Override
-    public StatisticsDTO latestDayStats(String startDate, String endDate, Integer days) {
+    public StatisticsDTO latestDayStats(String userId, String startDate, String endDate, Integer days) {
         // 获得最近 N 天的饮食数据，并拆分出A:特奶量、B:母乳量、C:食物量
 
         Float specialProteinSum = 0.0F;
@@ -61,7 +61,7 @@ public class StatisticsImpl implements StatisticsService {
         DecimalFormat df = new DecimalFormat("#.00");
 
         try {
-            list = dietService.findDietsByRange(startDate, endDate);
+            list = dietService.findDietsByRange(userId, startDate, endDate);
             Iterator<DietDTO> it = list.listIterator();
 
             for (DietDTO diet : list) {
@@ -113,9 +113,9 @@ public class StatisticsImpl implements StatisticsService {
     }
 
     @Override
-    public StatisticsDTO searchLatestStats(String measureTime, Integer days) throws ParseException {
+    public StatisticsDTO searchLatestStats(String userId, String measureTime, Integer days) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Optional<StatisticsDO> statisticsDO =  statisticsDao.findByMeasureTimeAndDays(formatter.parse(measureTime), days);
+        Optional<StatisticsDO> statisticsDO =  statisticsDao.findByMeasureTimeAndDaysAndPersonUuid(userId, formatter.parse(measureTime), days);
 
         if(Optional.ofNullable(statisticsDO).isEmpty()) {
             return  null;
@@ -127,21 +127,21 @@ public class StatisticsImpl implements StatisticsService {
     }
 
     @Override
-    public void saveLatestDayStats(String measureTime) throws ParseException {
+    public void saveLatestDayStats(String userId, String measureTime) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         // 删除重复的 measureTime 数据
-        statisticsDao.deleteByMeasureTime(formatter.parse(measureTime));
+        statisticsDao.deleteByMeasureTimeAndPersonUuid(userId, formatter.parse(measureTime));
 
         LocalDate endDate = LocalDate.of(Integer.parseInt(measureTime.split("-")[0]), Integer.parseInt(measureTime.split("-")[1]), Integer.parseInt(measureTime.split("-")[2]));
-        StatisticsDTO statisticsThreeDayDTO = latestDayStats(endDate.minusDays(3).format(DateTimeFormatter.ISO_LOCAL_DATE), measureTime, 3);
+        StatisticsDTO statisticsThreeDayDTO = latestDayStats(userId, endDate.minusDays(3).format(DateTimeFormatter.ISO_LOCAL_DATE), measureTime, 3);
         StatisticsDO threeDayDo = new StatisticsDO();
         BeanUtils.copyProperties(statisticsThreeDayDTO, threeDayDo);
         threeDayDo.setDays(3);
         threeDayDo.setMeasureTime(formatter.parse(measureTime));
         statisticsDao.save(threeDayDo);
 
-        StatisticsDTO statisticsSevenDayDTO = latestDayStats(endDate.minusDays(7).format(DateTimeFormatter.ISO_LOCAL_DATE), measureTime, 7);
+        StatisticsDTO statisticsSevenDayDTO = latestDayStats(userId, endDate.minusDays(7).format(DateTimeFormatter.ISO_LOCAL_DATE), measureTime, 7);
         StatisticsDO sevenDayDo = new StatisticsDO();
         BeanUtils.copyProperties(statisticsSevenDayDTO, sevenDayDo);
         sevenDayDo.setDays(7);

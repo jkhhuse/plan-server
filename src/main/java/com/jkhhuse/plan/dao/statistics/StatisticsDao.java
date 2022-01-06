@@ -10,9 +10,9 @@ import java.util.Optional;
 
 public interface StatisticsDao extends JpaRepository<StatisticsDO, Long> {
 
-    Optional<StatisticsDO> findByMeasureTimeAndDays(Date measureTime, Integer days);
+    Optional<StatisticsDO> findByMeasureTimeAndDaysAndPersonUuid(String personUuid, Date measureTime, Integer days);
 
     @Modifying
     @Transactional(rollbackFor = RuntimeException.class)
-    void deleteByMeasureTime(Date measureTime);
+    void deleteByMeasureTimeAndPersonUuid(String personUuid, Date measureTime);
 }

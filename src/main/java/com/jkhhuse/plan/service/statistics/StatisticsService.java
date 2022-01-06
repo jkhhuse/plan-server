@@ -9,12 +9,13 @@ public interface StatisticsService {
 
     /**
      * 获得最近 N Day 的统计数据
+     * @param userId 用户id
      * @param startDate 开始时间
      * @param endDate 结束时间
      * @param days 天数
      * @return StatisticsDTO
      */
-    StatisticsDTO latestDayStats(String startDate, String endDate, Integer days);
+    StatisticsDTO latestDayStats(String userId, String startDate, String endDate, Integer days);
 
     /**
      * 获得最近 N Day 的统计数据
@@ -22,11 +23,11 @@ public interface StatisticsService {
      * @param days 天数
      * @return
      */
-    StatisticsDTO searchLatestStats(String measureTime, Integer days) throws ParseException;
+    StatisticsDTO searchLatestStats(String userId, String measureTime, Integer days) throws ParseException;
 
     /**
      * 保存信息
      * @param measureTime
      */
-    void saveLatestDayStats(String measureTime) throws ParseException;
+    void saveLatestDayStats(String userId, String measureTime) throws ParseException;
 }

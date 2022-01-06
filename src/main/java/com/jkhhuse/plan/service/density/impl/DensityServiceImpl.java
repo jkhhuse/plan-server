@@ -9,11 +9,10 @@ import com.jkhhuse.plan.service.density.DensityService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,9 +20,6 @@ import java.util.List;
 public class DensityServiceImpl implements DensityService {
     @Resource
     private DensityDao densityDao;
-
-    @PersistenceContext
-    private EntityManager em;
 
     private List<DensityDTO> convertDTO(List<DensityDO> list) {
         List<DensityDTO> result = new ArrayList<>();
@@ -74,19 +70,19 @@ public class DensityServiceImpl implements DensityService {
     }
 
     @Override
-    public Boolean countMeasureDuplicate(String measureTime) throws ParseException {
+    public Boolean countMeasureDuplicate(String userId, String measureTime) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        int count = densityDao.countAllByMeasureTime(formatter.parse(measureTime));
+        int count = densityDao.countAllByMeasureTimeAndPersonUuid(userId, formatter.parse(measureTime));
         return count == 0 ? false : true;
     }
 
     @Override
-    public List<DensityDimensionDTO> getDensitySet(String startTime, String endTime) {
+    public List<DensityDimensionDTO> getDensitySet(String userId, String startTime, String endTime) {
         List<DensityDO> results = null;
         List<DensityDimensionDTO> dList = new ArrayList<>();
         SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            results = densityDao.findByMeasureTimeBetween(formater.parse(startTime), formater.parse(endTime));
+            results = densityDao.findByPersonUuidAndMeasureTimeBetween(userId, formater.parse(startTime), formater.parse(endTime));
             Iterator<DensityDO> it = results.listIterator();
             while (it.hasNext()) {
                 DensityDimensionDTO dto = new DensityDimensionDTO();
@@ -114,23 +110,23 @@ public class DensityServiceImpl implements DensityService {
 
     @Override
     public List<DensityDTO> getAllDensity(String userId) {
-        List<DensityDO> list = densityDao.findAllByOrderByMeasureTimeDesc();
+        List<DensityDO> list = densityDao.findAllByPersonUuidOrderByMeasureTimeDesc(userId);
         return convertDTO(list);
     }
 
     @Override
-    public List<DensityDTO> getTopDensity(Integer count) {
-        List<DensityDO> list = densityDao.findTopN(count);
+    public List<DensityDTO> getTopDensity(String userId, Integer count) {
+        List<DensityDO> list = densityDao.findTopNByPersonUuid(userId, count);
         return convertDTO(list);
     }
 
     @Override
-    public List<DensityScaleDTO> countRangeDensity() {
-        Integer low = densityDao.countLow();
-        Integer normal = densityDao.countNormal();
-        Integer notice = densityDao.countNotice();
-        int high = densityDao.countHigh();
-        Integer danger = densityDao.countDanger();
+    public List<DensityScaleDTO> countRangeDensity(String userId) {
+        Integer low = densityDao.countLow(userId);
+        Integer normal = densityDao.countNormal(userId);
+        Integer notice = densityDao.countNotice(userId);
+        int high = densityDao.countHigh(userId);
+        Integer danger = densityDao.countDanger(userId);
         List<DensityScaleDTO> densityScaleDTO = new ArrayList<>();
         densityScaleDTO.add(loadDensityScaleDTO("0-2 mg/dl", low));
         densityScaleDTO.add(loadDensityScaleDTO("2-4 mg/dl", normal));
@@ -138,6 +134,12 @@ public class DensityServiceImpl implements DensityService {
         densityScaleDTO.add(loadDensityScaleDTO("6-10 mg/dl", high));
         densityScaleDTO.add(loadDensityScaleDTO("10+ mg/dl", danger));
         return densityScaleDTO;
+    }
+
+    @Override
+    public Date getLatestMeasureTime(String userId) {
+        Date measureTime = densityDao.getLatestMeasureTime(userId);
+        return measureTime;
     }
 
 }

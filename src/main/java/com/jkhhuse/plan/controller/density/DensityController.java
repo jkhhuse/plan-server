@@ -57,10 +57,11 @@ public class DensityController {
     @ApiOperation(value = "判断血值数据是否存在重复", notes = "判断是否重复")
     @PostMapping(value = "/duplicate/{measureTime}")
     CommonResponse<Boolean> isDensityDuplicate(
+            @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId,
             @ApiParam(value = "采血开始时间", required = true) @Valid @RequestParam String measureTime) {
         boolean isExist = false;
         try {
-            isExist = densityService.countMeasureDuplicate(measureTime);
+            isExist = densityService.countMeasureDuplicate(userId, measureTime);
         } catch (ParseException e) {
             System.out.println(e);
         }
@@ -70,10 +71,11 @@ public class DensityController {
     @ApiOperation(value = "根据时间段获取血值的情况", notes = "血值情况查询")
     @GetMapping(value = "/dimension/range")
     CommonResponse<List<DensityVO>> searchDensitySet(
+            @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId,
             @ApiParam(value = "采血开始时间", required = true) @Valid @RequestParam String startTime,
             @ApiParam(value = "采血结束时间", required = true) @Valid @RequestParam String endTime) {
         List<DensityDimensionDTO> list = new ArrayList<>();
-        list = densityService.getDensitySet(startTime, endTime);
+        list = densityService.getDensitySet(userId, startTime, endTime);
         return new CommonResponse("200", list, "");
     }
 
@@ -108,16 +110,23 @@ public class DensityController {
             @ApiParam(value = "topN", required = true) @Valid @PathVariable Integer count
     ) {
         List<DensityDTO> list = new ArrayList<>();
-        list = densityService.getTopDensity(count);
+        list = densityService.getTopDensity(userId, count);
         return new CommonResponse("200", list, "");
     }
-
 
     @ApiOperation(value = "获取血值健康度比例", notes = "血值情况查询")
     @GetMapping(value = "/dimension/scale")
     CommonResponse<List<DensityScaleVO>> getScaleDensityList(
             @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId) {
-        List<DensityScaleDTO> list = densityService.countRangeDensity();
+        List<DensityScaleDTO> list = densityService.countRangeDensity(userId);
+        return new CommonResponse("200", list, "");
+    }
+
+    @ApiOperation(value = "获得最近测量血值时间", notes = "获得measureTime")
+    @GetMapping(value = "/latest")
+    CommonResponse<DensityScaleVO> getLatestMeasureTime(
+            @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId) {
+        List<DensityScaleDTO> list = densityService.countRangeDensity(userId);
         return new CommonResponse("200", list, "");
     }
 
