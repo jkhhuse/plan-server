@@ -47,4 +47,8 @@ public class PersonDO implements Serializable {
 
     @Column(nullable = false)
     private String paaswd;
+
+    @Column(name="picture_link")
+    private String pictureLink;
+
 }

@@ -31,7 +31,7 @@ public class PersonController {
         return new CommonResponse("200", person, "");
     }
 
-    @ApiOperation(value = "更新用户", notes = "修改一条记录")
+    @ApiOperation(value = "更新用户", notes = "更新")
     @PutMapping(value = "/update", consumes = "application/json")
     CommonResponse<String> updateCPerson(
             @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId,
@@ -45,5 +45,21 @@ public class PersonController {
         return new CommonResponse("200", "", message);
     }
 
+    @ApiOperation(value = "更换用户的头像", notes = "更新")
+    @PutMapping(value = "/addPictureLink")
+    CommonResponse<String> updatePictureLink(
+            @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId,
+            @ApiParam(value = "用户信息", required = true) @Valid @RequestParam String pictureLink) {
+        String result = personService.addPictureLink(userId, pictureLink);
+        return new CommonResponse("200", result, "");
+    }
+
+    @ApiOperation(value = "获得当前用户的头像信息", notes = "获得一条记录")
+    @GetMapping(value = "/getPictureLink")
+    CommonResponse<PersonVO> getUserPictureLink(
+            @ApiParam(name = "user_id", value = "用户id", required = true) @RequestHeader("user_id") String userId) {
+        String link = personService.getPictureLink(userId);
+        return new CommonResponse("200", link, "");
+    }
 
 }

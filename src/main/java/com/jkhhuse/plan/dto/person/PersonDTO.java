@@ -42,4 +42,8 @@ public class PersonDTO {
     @ApiModelProperty(value = "paaswd", required = true)
     @NotBlank(message = "密码不能为空")
     private String paaswd;
+
+    @ApiModelProperty(value = "pictureLink")
+    @NotBlank(message = "图片外链")
+    private String pictureLink;
 }

@@ -60,6 +60,9 @@ public class PersonServiceImpl implements PersonService {
         personDO.setAddr(personDTO.getAddr());
         personDO.setEmail(personDTO.getEmail());
         personDO.setPaaswd(bcryptEncoder.encode(personDTO.getPaaswd()));
+        // 默认会添加一个头像
+        // TODO: 暂定如下
+        personDO.setPictureLink("https://s2.loli.net/2022/01/07/y4Ue7xLIZRJ6Hi8.jpg");
         PersonDO result = personDao.save(personDO);
 
         // 插入数据信息
@@ -88,7 +91,23 @@ public class PersonServiceImpl implements PersonService {
         personDO.setAddr(personDTO.getAddr());
         personDO.setEmail(personDTO.getEmail());
         personDO.setPaaswd(bcryptEncoder.encode(personDTO.getPaaswd()));
+        personDO.setPictureLink(personDTO.getPictureLink());
         personDao.save(personDO);
         return "更新成功";
     }
+
+    @Override
+    public String addPictureLink(String uuid, String pictureLink) {
+        PersonDO personDO = personDao.findByUuid(uuid);
+        personDO.setPictureLink(pictureLink);
+        PersonDO person = personDao.save(personDO);
+        return person.getUuid();
+    }
+
+    @Override
+    public String getPictureLink(String uuid) {
+        PersonDO personDO = personDao.findByUuid(uuid);
+        return personDO.getPictureLink();
+    }
+
 }

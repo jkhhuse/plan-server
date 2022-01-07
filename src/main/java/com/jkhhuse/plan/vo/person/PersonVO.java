@@ -35,4 +35,7 @@ public class PersonVO {
 
     @ApiModelProperty(value = "paaswd", required = true)
     private String paaswd;
+
+    @ApiModelProperty(value = "pictureLink")
+    private String pictureLink;
 }

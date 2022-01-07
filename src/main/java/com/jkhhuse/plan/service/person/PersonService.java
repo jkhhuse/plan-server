@@ -25,4 +25,19 @@ public interface PersonService {
      * @return
      */
     String updatePerson(String uuid, PersonDTO personDTO) throws ParseException;
+
+    /**
+     * 增加当天用户的头像信息
+     * @param uuid
+     * @param pictureLink
+     * @return
+     */
+    String addPictureLink(String uuid, String pictureLink);
+
+    /**
+     * 获得当前用户的头像信息
+     * @param uuid
+     * @return
+     */
+    String getPictureLink(String uuid);
 }
