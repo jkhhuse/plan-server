@@ -26,6 +26,11 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
+    public List<FoodDTO> searchFoodWithNull() {
+        List<FoodDO> foods = foodDao.searchFoodInNames();
+        return CommonBeanUtils.copyListProperties(foods, FoodDTO::new);
+    }
+    @Override
     public FoodDTO findFood(String uuid) {
         Optional<FoodDO> foodDO = foodDao.findByUuid(uuid);
 

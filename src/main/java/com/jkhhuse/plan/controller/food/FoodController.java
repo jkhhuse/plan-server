@@ -30,7 +30,11 @@ public class FoodController {
     @GetMapping(value = "/search/{name}")
     CommonResponse<List<FoodVO>> searchFood(
             @ApiParam(value = "食物名称", required = true) @Valid @PathVariable String name) {
-        return new CommonResponse("200", foodService.searchFood(name), "");
+        if (name.toString().endsWith(" ")) {
+            return new CommonResponse("200", foodService.searchFoodWithNull(), "");
+        } else {
+            return new CommonResponse("200", foodService.searchFood(name), "");
+        }
     }
 
     @ApiOperation(value = "查询食物详情", notes = "根据食物名称进行查询")

@@ -8,5 +8,8 @@ public interface FoodService {
 
     List<FoodDTO> searchFood(String name);
 
+    List<FoodDTO> searchFoodWithNull();
+
     FoodDTO findFood(String uuid);
+
 }
