@@ -8,4 +8,4 @@ ADD target/plan-server-1.0.jar /plan-server.jar
 EXPOSE 8080
 
 # 执行命令
-ENTRYPOINT ["java","-jar","/plan-server.jar"]
+ENTRYPOINT ["java","-jar","plan-server.jar"]
