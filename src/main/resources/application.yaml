@@ -33,4 +33,4 @@ spring:
   jwt:
     header: Authorization
     secret: iot.technology
-  origin: localhost
+  origin: http://172.31.244.178:8081
