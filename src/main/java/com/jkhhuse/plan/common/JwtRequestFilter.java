@@ -4,6 +4,7 @@ import com.jkhhuse.plan.service.jwt.JwtUserDetailsService;
 import com.jkhhuse.plan.utils.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,9 +22,11 @@ import java.io.IOException;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-
     private final JwtUserDetailsService jwtUserDetailsService;
     private final JwtTokenUtil jwtTokenUtil;
+
+    @Value("${spring.origin}")
+    private String origin;
 
     public JwtRequestFilter(JwtUserDetailsService jwtUserDetailsService, JwtTokenUtil jwtTokenUtil) {
         this.jwtTokenUtil = jwtTokenUtil;
@@ -34,7 +37,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        response.setHeader("Access-Control-Allow-Origin", "http://172.31.244.178:8081");
+        response.setHeader("Access-Control-Allow-Origin", origin);
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PATCH, DELETE, PUT, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "set-cookie, X-Requested-With,content-type, user_id, Authorization, Origin, X-Requested-With, Content-Type, Accept");
