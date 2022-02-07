@@ -1,5 +1,5 @@
 # 环境
-FROM  adoptopenjdk/openjdk11
+FROM registry.cn-shanghai.aliyuncs.com/jkhhuse-plan/plan:openjdk11
 
 # 创建目录存放 jar 包与配置文件
 RUN mkdir -p /home/server
